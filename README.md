@@ -25,13 +25,22 @@ Below, we describe how to create a point cloud from a Princeton 3D Shape Model. 
 To create a point cloud from a Princeton 3D Model:
 1. Download the Princeton Shape Benchmark dataset.
 2. Launch MATLAB and change directory (cd) to cnvPrincetonShapeToPtCloud folder.
-3. Run cnvPrincetonShapeToPtCld(inputfile, outputfile) where inputfile is the path to a Princeton Shape file and outputfile is the path to the point cloud output file.  Example:  cnvPrincetonShapeToPtCld('/Users/flyinglightspec/src/benchmark/db/15/m1559/m1559.off', './pt1559.ptcld')
-4. Plot the resulting point cloud file using the provided plotPtCld.  Example:  plotPtCld('./pt1559.ptcld')
+3. Run cnvPrincetonShapeToPtCld(inputfile, outputfile) where inputfile is the path to a Princeton Shape file and outputfile is the path to the point cloud output file.  Example:  
+```
+cnvPrincetonShapeToPtCld('/Users/flyinglightspec/src/benchmark/db/15/m1559/m1559.off', './pt1559.ptcld')
+```
+4. Plot the resulting point cloud file using the provided plotPtCld.  Example:  
+```
+plotPtCld('./pt1559.ptcld')
+```
 5. Verify the point cloud looks like the jpeg file provided by the Princeton Shape Benchmark.  Example:  see /Users/flyinglightspec/src/benchmark/db/15/m1559/m1559_thumb.jpg
 
 Use readPrincetonFile to create a MATLAB variable named vertexList that contains the vertices of the points in a point cloud file.  Note that this MATLAB function is in the cnvPrincetonShapeToPtCloud directory.  Example:  [vertexList, minW, maxW, minH, maxH, minD, maxD] = readPrincetonFile('pt1559.ptcld')
 
-Run MinDist or QuotaBAlanced algorithm using the vertexList variable. Example:  algMinDist(vertexList, false, false) or algQuotaBalanced(vertexList, false, false)
+Run MinDist or QuotaBAlanced algorithm using the vertexList variable. Example:  
+```
+algMinDist(vertexList, false, false) or algQuotaBalanced(vertexList, false, false)
+```
 
 
 ## Motion Illuminations
