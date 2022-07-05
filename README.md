@@ -1,5 +1,5 @@
 # FLS-Multimedia2022
-This repository contains MATLAB implementation of Flying Light Speck (FLS) concepts presented in our ACM Multimedia 2022 paper.  In addition, it includes the Rose Clip data set consisting of 115 point clouds with each point cloud consisting of 65K FLSs.  
+This repository contains MATLAB R2022a (9.12.0.1884302, maci64 bit, February 16 2022) implementation of Flying Light Speck (FLS) concepts presented in our ACM Multimedia 2022 paper.  It includes the Rose Clip data set consisting of 115 point clouds with each point cloud requiring 65K FLSs to illuminate.  
 
 Author:  Shahram Ghandeharizadeh (shahram@usc.edu)
 
