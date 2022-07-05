@@ -14,6 +14,12 @@ Author:  Shahram Ghandeharizadeh (shahram@usc.edu)
 
 # Documentation
 
+This section describes how to run and benchmark algorithms for static and motion illumination in turn.
+
+## Static Illuminations
+
+## Motion Illuminations
+
 # Limitations
 
 # Getting the Source
