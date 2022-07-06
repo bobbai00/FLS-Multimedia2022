@@ -18,7 +18,7 @@ This section describes how to run and benchmark algorithms for static and motion
 
 ## Static Illuminations
 
-We use the [Princeton Shape Benchmark](https://shape.cs.princeton.edu/benchmark/) to create static point clouds to evaluate MinDist and QuotaBalanced algorithms.  While the choice of this benchmark is somewhat arbitrary, we were motivated to use it for several reasons.  First, it contains a database of 3D polygonal models collected from the web.  Second, it consists of a large number of shapes.  Third, it provides existing software tools for evaluating shape-based retrieval and analysis algorithsm.  As a part of our future research direction, we intend to explore alternative retrieval techniques with FLS illuminations.  
+We use the [Princeton Shape Benchmark](https://shape.cs.princeton.edu/benchmark/) to create static point clouds to evaluate MinDist and QuotaBalanced algorithms.  While the choice of this benchmark is somewhat arbitrary, we were motivated to use it for several reasons.  First, it contains a database of 3D polygonal models collected from the web.  Second, it consists of a large number of shapes.  Third, it provides existing software tools for evaluating shape-based retrieval and analysis algorithsm.  As a part of our future research direction, we intend to explore alternative retrieval techniques with FLS illuminations.  The benchmark and its existing software are a good comparison yardstick.  
 
 Below, we describe how to create a point cloud from a Princeton 3D Shape Model.  Subsequently, we describe how to run the MinDist and QuotaBalanced algorithms. 
 
@@ -57,3 +57,5 @@ algQuotaBalanced(vertexList, false, false)
 # Getting the Source
 
 # Executing this Software
+
+# Citations
