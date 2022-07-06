@@ -9,8 +9,8 @@ Author:  Shahram Ghandeharizadeh (shahram@usc.edu)
   * One algorithm to compute flight path of FLSs to illuminate motion illuminations consisting of a sequence of point clouds:  Motill.
   * All algorithms implemented using MATLAB R2022a academic edition. 
   * Rose Clip data set consisting of 115 point clouds.
-  * The algorithms are detailed in a paper that appeared in the ACM Multimedia 2022 paper.  An extended arXiv version of the paper is available at https:
-  * Click here for Bibtex citation of the ACM Multimedia 2022 paper and here for the arXiv version.
+  * The algorithms are detailed in a paper that appeared in the ACM Multimedia 2022 paper with an extended arXiv version.
+  * Click here for Bibtex citation of the [ACM Multimedia 2022 paper](https://github.com/shahramg/FLS-Multimedia2022#citations).
 
 # Documentation
 
@@ -29,13 +29,13 @@ To create a point cloud from a Princeton 3D Model:
 ```
 cnvPrincetonShapeToPtCld('/Users/flyinglightspec/src/benchmark/db/15/m1559/m1559.off', './pt1559.ptcld')
 ```
-4. Plot the resulting point cloud file using the provided plotPtCld.  Example:  
+4. Plot the resulting point cloud file using the provided plotPtCld function in cnvPrincetonShapeToPtCloud directory.  Example:  
 ```
 plotPtCld('./pt1559.ptcld')
 ```
 5. Verify the point cloud looks like the jpeg file provided by the Princeton Shape Benchmark.  Example:  see /Users/flyinglightspec/src/benchmark/db/15/m1559/m1559_thumb.jpg
 
-Use readPrincetonFile to create a MATLAB variable named vertexList that contains the vertices of the points in a point cloud file.  Note that this MATLAB function is in the cnvPrincetonShapeToPtCloud directory.  Example:  
+Use readPrincetonFile function to create a MATLAB variable named vertexList that contains the vertices of the points in a point cloud file.  This MATLAB function is in the cnvPrincetonShapeToPtCloud directory.  Example:  
 ```
 [vertexList, minW, maxW, minH, maxH, minD, maxD] = readPrincetonFile('pt1559.ptcld')
 ```
@@ -48,9 +48,11 @@ or
 ```
 algQuotaBalanced(vertexList, false, false)
 ```
+MinDist and QuotaBalanced implementations use an in-memory data structure to eliminate the overhead of secondary storage (disk/SSD/NVM) accesses to read a file into memory.  This is for benchmarking purposes.  All execution times reported in the ACM Multimedia 2022 publication is based on in-memory data structures.
 
 
 ## Motion Illuminations
+We represent a motion illumination as a stream of point clouds that must be rendered at a pre-specified rate, e.g., 24 point clouds per second.  This representation is illustrated by the RoseClip directory consisting of 115 point clouds rendered at 24 point clouds per second with a 4.79 second display time.  Each file consists of 65K points (FLS coordinates).
 
 # Limitations
 
@@ -59,3 +61,4 @@ algQuotaBalanced(vertexList, false, false)
 # Executing this Software
 
 # Citations
+Coming soon.
