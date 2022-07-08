@@ -29,6 +29,7 @@ function output = algQuotaBalanced(vertexList, silent, detectConflicts)
 % Author: Shahram Ghandeharizadeh                             %
 % Date: July 4, 2022                                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+addpath(genpath([pwd, filesep, 'util' ]));
 
 dispatcherRate=10; %10 FLSs per second
 output=1;

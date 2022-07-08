@@ -20,12 +20,17 @@ This section describes how to run and benchmark algorithms for static and motion
 
 We use the [Princeton Shape Benchmark](https://shape.cs.princeton.edu/benchmark/) to create static point clouds to evaluate MinDist and QuotaBalanced algorithms.  While the choice of this benchmark is somewhat arbitrary, we were motivated to use it for several reasons.  First, it contains a database of 3D polygonal models collected from the web.  Second, it consists of a large number of shapes.  Third, it provides existing software tools for evaluating shape-based retrieval and analysis algorithsm.  As a part of our future research direction, we intend to explore alternative retrieval techniques with FLS illuminations.  The benchmark and its existing software are a good comparison yardstick.  
 
-Below, we describe how to create a point cloud from a Princeton 3D Shape Model.  Subsequently, we describe how to run the MinDist and QuotaBalanced algorithms. 
+Below, we describe how to create a point cloud from a Princeton 3D Shape Model.  Subsequently, we describe how to run the MinDist and QuotaBalanced algorithms.  This workflow is captured in the MATLAB file workflowMinDist.m.  It is trivial to change this file to execute QuotaBalanced (not provided). To execute the workflow, download the Princeton Shape Benchmark database and execute the workflowMinDist function using MATLAB's Command Window:
+```
+workflowMinDist(false, true)
+```
+Make sure to provide the path to a valid Princeton Benchmark file as input.  And, modify the value of PtCldFile variable (in workflowMinDist.m) to have the name of the file that should contain the point cloud file.
 
-To create a point cloud from a Princeton 3D Model:
+Here are the individual steps of the workflow file.  Create a point cloud from a Princeton 3D Model:
 1. Download the Princeton Shape Benchmark dataset.
-2. Launch MATLAB and change directory (cd) to cnvPrincetonShapeToPtCloud folder.
-3. Run cnvPrincetonShapeToPtCld(inputfile, outputfile) where inputfile is the path to a Princeton Shape file and outputfile is the path to the point cloud output file.  Example:  
+2. Make a copy of this git repository (shahramg/FLS_Multimedia2022) available to MATLAB.
+3. Launch MATLAB and change directory (cd) to cnvPrincetonShapeToPtCloud folder of this repository.
+4. Run cnvPrincetonShapeToPtCld(inputfile, outputfile) where inputfile is the path to a Princeton Shape file and outputfile is the path to the point cloud output file.  Example:  
 ```
 cnvPrincetonShapeToPtCld('/Users/flyinglightspec/src/benchmark/db/15/m1559/m1559.off', './pt1559.ptcld')
 ```
@@ -40,7 +45,7 @@ Use readPrincetonFile function to create a MATLAB variable named vertexList that
 [vertexList, minW, maxW, minH, maxH, minD, maxD] = readPrincetonFile('pt1559.ptcld')
 ```
 
-Run MinDist or QuotaBAlanced algorithm using the vertexList variable. Example:  
+Return to the parent directory (cd ..) Run MinDist or QuotaBAlanced algorithm using the vertexList variable. Example:  
 ```
 algMinDist(vertexList, false, false) 
 ```
