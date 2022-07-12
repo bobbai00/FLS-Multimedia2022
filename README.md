@@ -69,8 +69,8 @@ We represent a motion illumination as a stream of point clouds that must be rend
 
 Shahram Ghandeharizadeh. 2022. Display of 3D Illuminations using Flying Light Specks.  In Proceedings of the 30th ACM International Conference on Multimedia} (MM '22), October 10--14, 2022, Lisboa, Portugal, DOI 10.1145/3503161.3548250, ISBN 978-1-4503-9203-7/22/10.
 
-BibTex
-
+BibTex:
+```
 @inproceedings{10.1145/3503161.3548250,<br/>
 author = {Ghandeharizadeh, Shahram},<br/>
 title = {Display of 3D Illuminations using Flying Light Specks},
@@ -83,3 +83,4 @@ booktitle = {ACM Multimedia},
 location = {Lisboa, Portugal},
 series = {MM '22}
 }
+```
