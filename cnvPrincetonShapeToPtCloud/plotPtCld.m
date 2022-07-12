@@ -31,7 +31,7 @@ while (~feof(fileID))
     splittedRow = strsplit(currRow,' ');
 
     splittedRow = str2double(splittedRow);
-    plot3(splittedRow(1), splittedRow(2), splittedRow(3), '.m');
+    plot3(splittedRow(1), splittedRow(2), splittedRow(3), '.b');
 end
 
 view(-140,12);
