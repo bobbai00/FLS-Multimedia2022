@@ -71,8 +71,8 @@ Shahram Ghandeharizadeh. 2022. Display of 3D Illuminations using Flying Light Sp
 
 BibTex:
 ```
-@inproceedings{10.1145/3503161.3548250,<br/>
-author = {Ghandeharizadeh, Shahram},<br/>
+@inproceedings{10.1145/3503161.3548250,
+author = {Ghandeharizadeh, Shahram},
 title = {Display of 3D Illuminations using Flying Light Specks},
 year = {2022},
 isbn = {978-1-4503-9203-7/22/10},
