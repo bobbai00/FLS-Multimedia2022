@@ -72,11 +72,18 @@ cpa=inMemoryCP('./RoseClip/',3);
 ```
 cpa{1}.createGrid(doReset, silent, 1500, 0, 0, 0, 0);
 ```
-3. Clone the grid constructed for the first point cloud on each of the remaing point clouds ``i``, using the same cubeCapacity as the one used for the first point cloud.  The purpose of doReset and silent is the same as item (2).  
+3. Clone the grid constructed for the first point cloud on each of the remaing point clouds ``i``, using the same cubeCapacity as the one used for the first point cloud.  The purpose of doReset and silent is the same as Step 2.  
 ```
 cpa{i}.createGrid(doReset, silent, cubeCapacity, cpa{1}.llArray, cpa{1}.hlArray, cpa{1}.dlArray,cpa{1}.cubes);
 ```
-
+4. Compute the difference between cubes of two consecutive point clouds and store the differences in a matlab table.
+```
+diffTbl=utilCubeCmpTwoPCs(cpa{i-1}, cpa{i})
+```
+5. While algIntraCubeFirst implements ICF, algInterCubeFirstPTs implements ICL.  Execute the ICL algorithm to compute TravelPaths, total intra-cube distance travelled by FLSs, total inter-cube distance travelled by FLSs, total number of intra-cube flights, total number of inter cube flights, and color changes.
+```
+[TravelPaths, totalIntraTravelDistance, totalInterTravelDistance, totalIntraFlights, totalInterFlights, ColorChanges] = algInterCubeFirstPTs(diffTbl, cpa{i-1}, cpa{i}, false, false)
+```
 
 # Limitations
 
