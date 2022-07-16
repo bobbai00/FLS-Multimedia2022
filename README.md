@@ -68,10 +68,16 @@ The workflow consists of the following steps:
 ```
 cpa=inMemoryCP('./RoseClip/',3);
 ```
-2. Construct a grid on the first in-memory point cloud.  If running ICF or ICL then maximum cube capacity of 1500 points provides fast execution times.  If running Simple the set maxium cube capacity to ``intmax``.
+2. Construct a grid on the first in-memory point cloud.  If running ICF or ICL then maximum cube capacity of 1500 points provides fast execution times.  If running Simple the set maxium cube capacity to ``intmax``, i.e., replace 1500 with ``intmax``.
 ```
-cpa{1}.createGrid(false, false, 1500, 0, 0, 0, 0);
+cpa{1}.createGrid(doReset, silent, 1500, 0, 0, 0, 0);
 ```
+Set doReset to ``false`` if this is the first time running the algorithm.  Set silent to ``false`` if it is desirable to see the output of the createGrid method.
+3. Clone the grid constructed for the first point cloud on each of the remaing point clouds ``i``, using the same cubeCapacity as the one used for the first point cloud.
+```
+cpa{i}.createGrid(doReset, silent, cubeCapacity, cpa{1}.llArray, cpa{1}.hlArray, cpa{1}.dlArray,cpa{1}.cubes);
+```
+The purpose of doReset and silent is the same as item (2).  By setting silent to true, the info messages of createGrid are supressed for benchmarking purposes.
 
 
 # Limitations
