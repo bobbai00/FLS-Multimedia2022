@@ -57,7 +57,22 @@ MinDist and QuotaBalanced implementations use an in-memory data structure to eli
 
 
 ## Motion Illuminations
-We represent a motion illumination as a stream of point clouds that must be rendered at a pre-specified rate, e.g., 24 point clouds per second.  This representation is illustrated by the RoseClip directory consisting of 115 point clouds rendered at 24 point clouds per second with a 4.79 second display time.  Each file consists of 65K points (FLS coordinates).
+We represent a motion illumination as a stream of point clouds that must be rendered at a pre-specified rate, e.g., 24 point clouds per second.  This representation is illustrated by the RoseClip directory consisting of 115 point clouds rendered at 24 point clouds per second with a 4.79 second display time.  Each file consists of 65K points, FLS coordinates.
+
+Three algorithms are presented in the Ghandehrizadeh ACM Multimedia 2022 paper:  Simple, Intra-Cube First (ICF), and Intra-Cube Last (ICL).  Simple is a special case of ICF with cube capacity set to max integer.  To run these algorithms, analyze workflowMotill.m that can be executed directly.  The input to this file are numFiles, cubeCapacity, and doReset.  numFiles is the number of Rose illumination files to process starting with the first one, e.g., numFiles=3 processes Scene001.ply, Scene002.ply, and Scene003.ply in the RoseClip directory.  cubeCapacity controls the number of points assigned to each cube constructed by Motill.  The Ghandeharizadeh paper reports experimental results with cubeCapacity set to 100, 1500, 10K, and infinity.  When cubeCapacity is set to infinity, ICF emulates Simple.  doReset refreshes the list of points (vertices) maintained by a point cloud by copying its backup copy to a working copy to be manipulated by an algorithm.  This prevents the overhead of reading files to run an algorithm.  
+
+To measure the execution time of the alternative algorithms without disk I/O overhead, we read the content of these files into in-memory data structures.  This data structure is an array of instances of the inMemoryCP class.  Each instance corresponds to a point cloud and its cubes.  By staging the RoseClip point clouds in memory, one may run the different algorithms significantly faster than reading data from files.  By using the doReset flag, the original points are written to a working copy that may be manipulated by an algorithm.
+
+The workflow consists of the following steps:
+1. Read a fixed number of point clouds into memory, say 3.
+```
+cpa=inMemoryCP('./RoseClip/',3);
+```
+2. Construct a grid on the first in-memory point cloud.  If running ICF or ICL then maximum cube capacity of 1500 points provides fast execution times.  If running Simple the set maxium cube capacity to ``intmax``.
+```
+cpa{1}.createGrid(false, false, 1500, 0, 0, 0, 0);
+```
+
 
 # Limitations
 

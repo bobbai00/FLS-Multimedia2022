@@ -1,5 +1,4 @@
 function output = workflowMotill(numFiles, cubeCapacity, doReset)
-doReset = false;
 silent = false;
 
 pathToCloudPointFiles='./RoseClip/';
