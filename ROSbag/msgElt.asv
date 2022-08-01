@@ -1,0 +1,33 @@
+classdef msgElt < handle
+    properties
+        coordElt = 0
+        colorsElt = 0
+        dursElt = 0
+        whatispresentArray = 'N' % N is for node, D for coordinate, C for color, B for both
+        numPtClds {mustBeInteger} = 0
+    end
+    methods
+        function output = setEndTS(obj,endTS)
+            if en
+            obj.dursElt.endTS = endTS;
+        end
+        function obj = msgElt(coordInstance, colorInstance, durationInstance)
+            wp='N';
+            if coordInstance ~= 0
+                obj.coordElt = coordInstance;
+                wp = 'D';
+            end
+
+            if colorInstance ~= 0
+                obj.colorsElt = colorInstance;
+                if wp == 'N'
+                    wp = 'C';
+                else
+                    wp='B';
+                end
+            end
+            obj.dursElt = durationInstance;
+            obj.whatispresentArray = wp;
+        end
+    end
+end

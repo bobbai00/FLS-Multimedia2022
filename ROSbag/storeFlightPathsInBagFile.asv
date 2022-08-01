@@ -1,0 +1,13 @@
+function output = storeFlightPathsInBagFile(filename, TravelPathArray, CldPtArray)
+% Process the TravelPaths and ColorChanges to generate a bag file by:
+% 1. Read point cloud i into a hash table HT
+% 2. Enumerate entries in TravelPaths{i}
+% 3. Probe HT with TravelPaths{i}.source.  If found then add
+% TravelPaths{i}.destination to the hash table entry.  Add
+% TravelPaths{i}.destination to the 
+
+% create a hash table on the first point cloud and Read the first point cloud into a hash table
+hashMapOnLeadFrame = containers.Map('KeyType','char', 'ValueType','any');
+
+
+end

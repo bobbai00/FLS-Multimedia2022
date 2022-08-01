@@ -1,5 +1,12 @@
-function output = workflowMotill(numFiles, cubeCapacity, doReset)
+function [TravelPaths, totalIntraTravelDistance, totalInterTravelDistance, totalIntraFlights, totalInterFlights, ColorChanges] = workflowMotill(numFiles, cubeCapacity, doReset)
 silent = false;
+
+TravelPaths={};
+totalIntraTravelDistance=[];
+totalInterTravelDistance=[];
+totalIntraFlights=[];
+totalInterFlights=[];
+ColorChanges={};
 
 pathToCloudPointFiles='./RoseClip/';
 
@@ -15,7 +22,7 @@ if numFiles > 1
     for i=2:numFiles
         cpa{i}.createGrid(doReset, silent, cubeCapacity, cpa{1}.llArray, cpa{1}.hlArray, cpa{1}.dlArray,cpa{1}.cubes);
         diffTbl=utilCubeCmpTwoPCs(cpa{i-1}, cpa{i})
-        [TravelPaths, totalIntraTravelDistance, totalInterTravelDistance, totalIntraFlights, totalInterFlights, ColorChanges] = algInterCubeFirstPTs(diffTbl, cpa{i-1}, cpa{i}, false, false)
+        [ TravelPaths{i-1}, totalIntraTravelDistance(i-1), totalInterTravelDistance(i-1), totalIntraFlights(i-1), totalInterFlights(i-1), ColorChanges{i-1} ] = algInterCubeFirstPTs(diffTbl, cpa{i-1}, cpa{i}, false, false)
     end
 end
 
