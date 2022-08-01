@@ -3,7 +3,7 @@ classdef msgElt < handle
         coordElt = 0
         colorsElt = 0
         dursElt = 0
-        whatispresentArray = 'N' % N is for node, D for coordinate, C for color, B for both
+        whatispresent = 'N' % N is for none, D for coordinate, C for color, B for both
         numPtClds {mustBeInteger} = 0
     end
     methods
@@ -31,7 +31,7 @@ classdef msgElt < handle
                 end
             end
             obj.dursElt = durationInstance;
-            obj.whatispresentArray = wp;
+            obj.whatispresent = wp;
         end
     end
 end
