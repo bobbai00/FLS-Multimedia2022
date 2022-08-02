@@ -26,4 +26,5 @@ if numFiles > 1
         [ TravelPaths{i-1}, totalIntraTravelDistance(i-1), totalInterTravelDistance(i-1), totalIntraFlights(i-1), totalInterFlights(i-1), ColorChanges{i-1} ] = algCubeChangeIntRAFirst(diffTbl, cpa{i-1}, cpa{i}, false, false)
     end
 end
+
 end

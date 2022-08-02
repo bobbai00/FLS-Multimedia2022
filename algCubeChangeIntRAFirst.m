@@ -1,4 +1,13 @@
 function [TravelPaths, totalIntraTravelDistance, totalInterTravelDistance, totalIntraFlights, totalInterFlights, ColorChanges] = algCubeChangeIntRAFirst(diffTable, leadCloudPoint, derivedCloudPoint, sanityChk, silent)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Description:  Computes flight paths by processing cubes     %
+%               constructed on two point clouds.  It processes%
+%               intra-cube changes first.                     %
+% Used by:      workflowMotill.m                              %
+% Dependencies: None                                          %
+% Author: Shahram Ghandeharizadeh                             %
+% Date: July 4, 2022                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Verify the input cloud points have the same grid structure on them.
 if size(leadCloudPoint.cubes) ~= size(derivedCloudPoint.cubes)
     error('Error, lead and derived cloud points must have the same grid.')
