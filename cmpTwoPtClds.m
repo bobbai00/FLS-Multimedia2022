@@ -53,13 +53,12 @@ for i=1:size( PtCld2.vertexList, 2 )
         end
     else
         numMissingPts=numMissingPts+1;
-        missingPts(numMissingPts)=destCloudPoint.cubes(tgtCubeID).assignedVertices(i);
+        missingPts(numMissingPts)=i;
     end
 end
 if size( hashMapOnLeadFrame.values() , 2) > 0 || numMissingPts > 0
     outputT= ['Different point clouds.  Point cloud 2 has ', num2str(numMissingPts), ' different points.  Point cloud 1 has ', num2str(size( hashMapOnLeadFrame.values() , 2)), ' different points.' ];
     disp(outputT);
-    %modPts=cell2mat( hashMapOnLeadFrame.values() );
 else
     outputT= ['Identical point clouds.'];
     disp(outputT);

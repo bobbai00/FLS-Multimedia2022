@@ -1,4 +1,4 @@
-function output = storeFlightPathsInBagFile(bagfilename, numPtClds, TravelPathArray, ColorChange, CldPtArray)
+function output = storeFlightPathsInBagFile(bagfilename, numPtClds, TravelPathArray, ColorChange, PtCldArray)
 % Process the TravelPaths and ColorChanges to generate a bag file by:
 % 1. Read point cloud i into a hash table HT
 % 2. Enumerate entries in TravelPaths{i}
@@ -8,7 +8,7 @@ function output = storeFlightPathsInBagFile(bagfilename, numPtClds, TravelPathAr
 
 % create a hash table on the first point cloud and populate it
 hashMapOnFirstCldPt = containers.Map('KeyType','char', 'ValueType','any');
-srcCloudPoint = CldPtArray{1};
+srcCloudPoint = PtCldArray{1};
 
 % We use the backupVertexList because it is the original AND this code
 % only reads coordinates of points without changing them.
@@ -30,6 +30,9 @@ hashMapArrays{1}=hashMapOnFirstCldPt;
 % Enumerate the flight paths for each point cloud and probe the hash tables
 % in reverse order
 for ptcldidx=2:numPtClds
+    outputT= ['Processing coordinate changes for point cloud ', num2str(ptcldidx-1), ' with ', num2str(size( TravelPathArray{ptcldidx-1}, 2)), ' flight paths.' ];
+    disp(outputT);
+
     newHashMap = containers.Map('KeyType','char', 'ValueType','any');
     hashMapArrays{ptcldidx}=newHashMap;
     tgtTrvlPath = TravelPathArray(ptcldidx-1);

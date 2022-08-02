@@ -395,9 +395,9 @@ if ~isempty(diffTable)
                 totalInterTravelDistance=totalInterTravelDistance+dist;
 
                 TPidx=TPidx+1;
-                % Bug TravelPaths{TPidx}= horzcat(tgtCubeID, srcPt, derivedCloudPoint.vertexList( srcPt ), cid, destPt, leadCloudPoint.vertexList( destPt ) );
-                TravelPaths{TPidx}= horzcat(tgtCubeID, srcPt, leadCloudPoint.vertexList( srcPt ), cid, destPt, derivedCloudPoint.vertexList( destPt ) );
-                
+                TravelPaths{TPidx}= horzcat(tgtCubeID, srcPt, derivedCloudPoint.vertexList( srcPt ), cid, destPt, leadCloudPoint.vertexList( destPt ) );
+                TravelPaths{TPidx}= horzcat(cid, srcPt, leadCloudPoint.vertexList( srcPt ), tgtCubeID, destPt, derivedCloudPoint.vertexList( destPt ) );
+
 
                 % Fix the cube as well
                 % Remove the old point from the lead cloud and its tgtCubeID
