@@ -12,8 +12,8 @@ property uchar alpha
 element face 63080
 property list uchar uint vertex_indices
 end_header
-4 4 4 130 10 24 255
-6 6 6 400 400 400 255
+4 4 4 124 124 124 255
+6 6 6 100 100 100 255
 7 7 7 127 10 24 255
 8 8 8 128 10 24 255
 9 9 9 127 10 24 255

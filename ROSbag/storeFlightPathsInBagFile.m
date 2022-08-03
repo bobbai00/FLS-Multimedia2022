@@ -38,7 +38,7 @@ for ptcldidx=2:numPtClds
     tgtTrvlPath = TravelPathArray(ptcldidx-1);
 
     % start time stamp for duration interval in milliseconds
-    startTS = (ptcldidx-1) * 1000/24; 
+    startTS = (ptcldidx-1) * 1000/24;
 
     % Enumerate the flight paths for change of position
     for k=1:size(tgtTrvlPath{1},2)
@@ -54,11 +54,19 @@ for ptcldidx=2:numPtClds
                 % Put the destination in the new hash map
                 b1=tgtTrvlPath{1}{k}{6};
                 coord1 = coordClass(b1(1), b1(2), b1(3));
-                % color1 = colorClass(b1(4), b1(5), b1(6), b1(7));
+                color1 = colorClass(b1(4), b1(5), b1(6), b1(7));
                 duration1 = durationClass(startTS);
                 hval=utilHashFunction(b1);
+
                 % colors is zero because travel paths are
-                newHashMap(hval)=msgElt(coord1, 0, duration1);
+                myElt=msgElt(coord1, color1, duration1);
+                if int8(tgtElt.colorsElt.red) == int8(color1.red) && int8(tgtElt.colorsElt.blue)== int8(color1.blue) && int8(tgtElt.colorsElt.green)==int8(color1.green) && int8(tgtElt.colorsElt.transparency)==int8(color1.transparency)
+                    myElt.whatispresent='D';
+                else
+                    myElt.whatispresent='B';
+                end
+
+                newHashMap(hval)=myElt;
 
                 foundProbeKey = true;
             end
@@ -70,7 +78,44 @@ for ptcldidx=2:numPtClds
         end
     end
 
-
+    tgtColorChg = ColorChange(ptcldidx-1);
+    % Enumerate the change of colors
+    for k=1:size(tgtColorChg{1},2)
+        b1=tgtColorChg{1}{k}{3};
+        probeKey=utilHashFunction(b1);
+        hashMapIdx=ptcldidx-1;
+        foundProbeKey=false;
+        for hidx=hashMapIdx:-1:1
+            if foundProbeKey == false && hashMapArrays{hidx}.isKey(probeKey)
+                % Close the interval for the current element
+                tgtElt = hashMapArrays{hidx}(probeKey);
+                tgtElt.dursElt.endTS = startTS;
+                % Put the destination in the new hash map
+                b1=tgtColorChg{1}{k}{6};
+                coord1 = coordClass(b1(1), b1(2), b1(3));
+                color1 = colorClass(b1(4), b1(5), b1(6), b1(7));
+                duration1 = durationClass(startTS);
+                hval=utilHashFunction(b1);
+                if newHashMap.isKey(hval)
+                    % Entry exists because it had a change of coordinate
+                    tgtElt = hashMapArrays{hidx}(hval);
+                    tgtElt.colorsElt=color1;
+                    tgtElt.whatispresent='B';
+                else
+                    % maintain coord to generate bag file
+                    myElt = msgElt(coord1, color1, duration1);
+                    myElt.whatispresent='C';
+                    newHashMap(hval)= myElt;
+                end
+                foundProbeKey = true;
+            end
+        end
+        if ~foundProbeKey
+            outputT= sprintf('Error in storeFlightPathsInBagFile, flight path %d has no target FLS device.',k);
+            disp(outputT);
+            %error('Exiting, cannot continue.')
+        end
+    end
 end
 
 end

@@ -83,10 +83,9 @@ for i=1:size(zeroCubeIDs,1) % zeroCubeIDs is a column vector and 1 has the numbe
             % Iterate elements and generate new color paths
             srcPt = leadColor(k);
             destPt = derColor(k);
-            leadCloudPoint.replacePoint(tgtCubeID, srcPt, leadCloudPoint.vertexList(srcPt), derivedCloudPoint.vertexList(destPt))
-
             CCidx=CCidx+1;
             ColorChanges{CCidx}=horzcat(tgtCubeID, srcPt, leadCloudPoint.vertexList( srcPt ), tgtCubeID, destPt, derivedCloudPoint.vertexList(destPt) );
+            leadCloudPoint.replacePoint(tgtCubeID, srcPt, leadCloudPoint.vertexList(srcPt), derivedCloudPoint.vertexList(destPt));
         end
 
     end
