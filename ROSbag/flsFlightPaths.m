@@ -1,5 +1,6 @@
-function [BagArray] = storeFlightPathsInBagFile(bagfilename, numPtClds, TravelPathArray, ColorChange, PtCldArray)
-BagArray = [];
+function [FLSArray] = flsFlightPaths(numPtClds, TravelPathArray, ColorChange, PtCldArray, silent)
+FLSArray = {};
+BagIdx = 0;
 
 % Process the TravelPaths and ColorChanges to generate a bag file by:
 % 1. Read point cloud i into a hash table HT
@@ -139,7 +140,9 @@ for i=1:size(hashMapArrays, 2)
                 error('Exiting, cannot continue.')
             else
                 vl.dursElt.endTS = endTS;
-                BagArray=[BagArray, vl];
+
+                BagIdx = BagIdx+1;
+                FLSArray{BagIdx}=vl;
             end
         else
             % Navigate the hash tables and populate the NextBagElt of each
@@ -160,19 +163,66 @@ for i=1:size(hashMapArrays, 2)
                     if size(fl_log,1)==0
                         done = true;
                     else
-
                         b1=fl_log{6};
                         probeKey=utilHashFunction(b1);
                         if hashMapArrays{hidx}.isKey(probeKey)
-                            tgtElt = hashMapArrays{hidx}(probeKey);
-                            BagA2 = [BagA2, vl];
-                        else
-                            hidx=hidx+1;
+                            tgt_elt = hashMapArrays{hidx}(probeKey);
+                            if tgt_elt.dursElt.endTS == -1
+                                tgt_elt.dursElt.endTS = endTS;
+                                done = true;
+                            else
+                            end
+                            BagA2 = [BagA2, tgt_elt];
+                            remove(hashMapArrays{hidx}, probeKey);
                         end
+                        hidx=hidx+1;
                     end
                 end
+                BagIdx = BagIdx+1;
+                FLSArray{BagIdx}=BagA2;
             end
         end
+    end
+end
+
+if ~silent
+    % Total number of FLSs
+    outputT= ['Success!  Computed paths for ', num2str(size(FLSArray,2)),' FLSs successfully.'];
+    disp(outputT);
+
+    myHistogram = [];
+    minNumPaths=intmax;
+    IdxMinPaths=-1;
+    maxNumPaths=-1;
+    IdxMaxPaths=-1;
+    for i=1:size(FLSArray,2)
+        sz = size(FLSArray{i}, 2);
+        if sz > maxNumPaths
+            maxNumPaths = sz;
+            IdxMaxPaths = i;
+        end
+        if sz < minNumPaths
+            minNumPaths = sz;
+            IdxMinPaths = i;
+        end
+
+        try
+            myHistogram(sz)=myHistogram(sz)+1;
+        catch
+            myHistogram(sz)=1;
+        end
+    end
+    % FLS with minimum number of paths
+    outputT= ['FLS ', num2str(IdxMinPaths) ,' has the fewest number of paths, ', num2str(minNumPaths),'.'];
+    disp(outputT);
+
+    % FLS with maximum number of paths
+    outputT= ['FLS ', num2str(IdxMaxPaths) ,' has the most number of paths, ', num2str(maxNumPaths),'.'];
+    disp(outputT);
+    % Histogram of FLSs with different number of paths
+    for i=1:size(myHistogram,2)
+        outputT= ['Number of FLSs with ', num2str(i) ,' paths = ', num2str( myHistogram(i) ),''];
+        disp(outputT);
     end
 end
 

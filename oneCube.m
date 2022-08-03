@@ -5,7 +5,7 @@ classdef oneCube < handle
 %                                                             %
 % Used by: Motill                                             %
 %                                                             %
-% Author: Shahram Ghandeharizadeh                             %
+% Author: Shahram Ghandeharizadeh <shahram at usc.edu>        %
 % Date: July 4, 2022                                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties
