@@ -5,6 +5,8 @@ classdef msgElt < handle
         dursElt = 0
         whatispresent = 'N' % N is for none, D for coordinate, C for color, B for both
         numPtClds {mustBeInteger} = 0
+        FlightLog = {}
+        NextBagElt = []
     end
     methods
         function output = setEndTS(obj,endTS)

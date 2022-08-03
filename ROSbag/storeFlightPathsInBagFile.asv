@@ -1,4 +1,6 @@
-function output = storeFlightPathsInBagFile(bagfilename, numPtClds, TravelPathArray, ColorChange, PtCldArray)
+function [BagArray] = storeFlightPathsInBagFile(bagfilename, numPtClds, TravelPathArray, ColorChange, PtCldArray)
+BagArray = [];
+
 % Process the TravelPaths and ColorChanges to generate a bag file by:
 % 1. Read point cloud i into a hash table HT
 % 2. Enumerate entries in TravelPaths{i}
@@ -51,6 +53,8 @@ for ptcldidx=2:numPtClds
                 % Close the interval for the current element
                 tgtElt = hashMapArrays{hidx}(probeKey);
                 tgtElt.dursElt.endTS = startTS;
+                tgtElt.FlightLog = tgtTrvlPath{1}{k};
+
                 % Put the destination in the new hash map
                 b1=tgtTrvlPath{1}{k}{6};
                 coord1 = coordClass(b1(1), b1(2), b1(3));
@@ -90,6 +94,8 @@ for ptcldidx=2:numPtClds
                 % Close the interval for the current element
                 tgtElt = hashMapArrays{hidx}(probeKey);
                 tgtElt.dursElt.endTS = startTS;
+                tgtElt.FlightLog = tgtColorChg{1}{k};
+
                 % Put the destination in the new hash map
                 b1=tgtColorChg{1}{k}{6};
                 coord1 = coordClass(b1(1), b1(2), b1(3));
@@ -113,7 +119,59 @@ for ptcldidx=2:numPtClds
         if ~foundProbeKey
             outputT= sprintf('Error in storeFlightPathsInBagFile, flight path %d has no target FLS device.',k);
             disp(outputT);
-            %error('Exiting, cannot continue.')
+            error('Exiting, cannot continue.')
+        end
+    end
+end
+
+endTS = numPtClds * 1000/24;
+% Enumerate entries and close their end intervals
+for i=1:size(hashMapArrays, 2)
+    tgtHash = hashMapArrays{i};
+    ks = tgtHash.keys();
+    for kidx=1:size(ks, 2)
+        vl = tgtHash( ks{kidx} );
+        if size(vl.FlightLog,1)==0
+            % Close this entry, it is done.
+            if vl.dursElt.endTS ~= -1
+                outputT= sprintf('Error in storeFlightPathsInBagFile, endTS should be -1 for those entries with no flight paths in the first point cloud.');
+                disp(outputT);
+                error('Exiting, cannot continue.')
+            else
+                vl.dursElt.endTS = endTS;
+                BagArray=[BagArray, vl];
+            end
+        else
+            % Navigate the hash tables and populate the NextBagElt of each
+            % entry
+            if vl.dursElt.endTS == -1
+                outputT= sprintf('Error in storeFlightPathsInBagFile, endTS should NOT be -1 for those entries with flight paths.');
+                disp(outputT);
+                error('Exiting, cannot continue.')
+            else
+                done = false;
+                tgt_elt = vl;
+                hidx=2;  % Index to the array of hash tables
+                BagA2 = [];
+                BagA2 = [BagA2, vl];
+                while ~done
+                    % Get the flight log
+                    fl_log = tgt_elt.FlightLog;
+                    if size(fl_log,1)==0
+                        done = true;
+                    else
+
+                        b1=fl_log{6};
+                        probeKey=utilHashFunction(b1);
+                        if hashMapArrays{hidx}.isKey(probeKey)
+                            tgtElt = hashMapArrays{hidx}(probeKey);
+                            BagA2 = [BagA2, vl];
+                        else
+                            hidx=hidx+1;
+                        end
+                    end
+                end
+            end
         end
     end
 end
