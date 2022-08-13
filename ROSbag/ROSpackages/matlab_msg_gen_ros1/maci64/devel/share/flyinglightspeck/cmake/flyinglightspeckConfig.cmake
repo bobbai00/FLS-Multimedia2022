@@ -67,14 +67,14 @@ set(flyinglightspeck_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(flyinglightspeck_SOURCE_PREFIX /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck)
-  set(flyinglightspeck_DEVEL_PREFIX /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/devel)
+  set(flyinglightspeck_SOURCE_PREFIX /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck)
+  set(flyinglightspeck_DEVEL_PREFIX /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel)
   set(flyinglightspeck_INSTALL_PREFIX "")
   set(flyinglightspeck_PREFIX ${flyinglightspeck_DEVEL_PREFIX})
 else()
   set(flyinglightspeck_SOURCE_PREFIX "")
   set(flyinglightspeck_DEVEL_PREFIX "")
-  set(flyinglightspeck_INSTALL_PREFIX /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/install)
+  set(flyinglightspeck_INSTALL_PREFIX /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/install)
   set(flyinglightspeck_PREFIX ${flyinglightspeck_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(flyinglightspeck_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/devel/include " STREQUAL " ")
+if(NOT "/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel/include " STREQUAL " ")
   set(flyinglightspeck_INCLUDE_DIRS "")
-  set(_include_dirs "/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/devel/include")
+  set(_include_dirs "/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/
         message(FATAL_ERROR "Project 'flyinglightspeck' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'flyinglightspeck' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'flyinglightspeck' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/${idir}'.  ${_report}")
     endif()
     _list_append_unique(flyinglightspeck_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/devel/lib;/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/lib;/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages/lib)
+    foreach(path /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel/lib;/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/lib;/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

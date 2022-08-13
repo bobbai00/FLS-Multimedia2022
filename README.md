@@ -80,12 +80,16 @@ cpa{i}.createGrid(doReset, silent, cubeCapacity, cpa{1}.llArray, cpa{1}.hlArray,
 ```
 diffTbl=utilCubeCmpTwoPCs(cpa{i-1}, cpa{i})
 ```
-5. While algIntraCubeFirst implements ICF, algInterCubeFirstPTs implements ICL.  Execute the ICL algorithm to compute TravelPaths, total intra-cube distance travelled by FLSs, total inter-cube distance travelled by FLSs, total number of intra-cube flights, total number of inter cube flights, and color changes.
+5. While algCubeChangeIntRAFirst implements ICF, algCubeChangeInterFirst implements ICL.  Execute the ICL algorithm to compute TravelPaths, total intra-cube distance travelled by FLSs, total inter-cube distance travelled by FLSs, total number of intra-cube flights, total number of inter cube flights, and color changes.
 ```
-[TravelPaths, totalIntraTravelDistance, totalInterTravelDistance, totalIntraFlights, totalInterFlights, ColorChanges] = algInterCubeFirstPTs(diffTbl, cpa{i-1}, cpa{i}, false, false)
+[TravelPaths, totalIntraTravelDistance, totalInterTravelDistance, totalIntraFlights, totalInterFlights, ColorChanges] = algCubeChangeIntRAFirst(diffTbl, cpa{i-1}, cpa{i}, false, false)
 ```
 
 # Limitations
+1. In computing travelled distance, this software assumes an FLS flys a straight line from its source (say a dispatcher) to its destination.
+2. The provided software assumes two FLSs may colide if their travel paths (a stright line) intersects.  It does not model the possibility of an FLS traveling slower than its anticipated speed.  Or, FLSs catching up with one another.  
+3. The provided software computes travel paths.  It does not emulate an FLS flying from its source to its destination.
+4. The provided software does not implement a communication network for FLSs.
 
 # Getting the Source
 

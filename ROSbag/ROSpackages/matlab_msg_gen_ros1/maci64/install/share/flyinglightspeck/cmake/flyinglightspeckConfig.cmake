@@ -67,14 +67,14 @@ set(flyinglightspeck_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(flyinglightspeck_SOURCE_PREFIX /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck)
-  set(flyinglightspeck_DEVEL_PREFIX /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/devel)
+  set(flyinglightspeck_SOURCE_PREFIX /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck)
+  set(flyinglightspeck_DEVEL_PREFIX /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel)
   set(flyinglightspeck_INSTALL_PREFIX "")
   set(flyinglightspeck_PREFIX ${flyinglightspeck_DEVEL_PREFIX})
 else()
   set(flyinglightspeck_SOURCE_PREFIX "")
   set(flyinglightspeck_DEVEL_PREFIX "")
-  set(flyinglightspeck_INSTALL_PREFIX /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/install)
+  set(flyinglightspeck_INSTALL_PREFIX /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/install)
   set(flyinglightspeck_PREFIX ${flyinglightspeck_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/install/lib;/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/lib;/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages/lib)
+    foreach(path /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/install/lib;/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/lib;/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -8,8 +8,8 @@ totalIntraFlights=[];
 totalInterFlights=[];
 ColorChanges={};
 
-% pathToCloudPointFiles='./TestClip/';
-pathToCloudPointFiles='./RoseClip/';
+pathToCloudPointFiles='./TestClip/';
+% pathToCloudPointFiles='./RoseClip/';
 
 % Read the cubes in memory
 cpa=inMemoryCP(pathToCloudPointFiles,numFiles);

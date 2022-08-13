@@ -42,7 +42,7 @@ rule CXX_SHARED_LIBRARY_LINKER__flyinglightspeck_matlab_Release
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/local/Cellar/cmake/3.22.2/bin/cmake --regenerate-during-build -S/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/src -B/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/build
+  command = /usr/local/Cellar/cmake/3.22.2/bin/cmake --regenerate-during-build -S/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src -B/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build
   description = Re-running CMake...
   generator = 1
 

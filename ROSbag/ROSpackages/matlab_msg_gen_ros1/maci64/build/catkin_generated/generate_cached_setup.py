@@ -19,9 +19,9 @@ except ImportError:
             break
     from catkin.environment_cache import generate_environment_script
 
-code = generate_environment_script('/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/devel/env.sh')
+code = generate_environment_script('/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel/env.sh')
 
-output_filename = '/Users/flyinglightspec/Documents/ROSpackages/matlab_msg_gen_ros1/maci64/build/catkin_generated/setup_cached.sh'
+output_filename = '/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build/catkin_generated/setup_cached.sh'
 with open(output_filename, 'w') as f:
     # print('Generate script for cached setup "%s"' % output_filename)
     f.write('\n'.join(code))
