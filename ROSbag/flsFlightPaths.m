@@ -22,7 +22,7 @@ for i=1:size( srcCloudPoint.backupVertexList, 2 )
     % create a bag element and add it to the hash index
     coord1 = coordClass(b1(1), b1(2), b1(3));
     color1 = colorClass(b1(4), b1(5), b1(6), b1(7));
-    duration1 = durationClass(0);
+    duration1 = durationClass(1);
 
     hashMapOnFirstCldPt(hval)=msgElt(coord1, color1, duration1);
 end
@@ -41,7 +41,8 @@ for ptcldidx=2:numPtClds
     tgtTrvlPath = TravelPathArray(ptcldidx-1);
 
     % start time stamp for duration interval in milliseconds
-    startTS = (ptcldidx-1) * 1000/24;
+    % startTS = (ptcldidx-1) * 1000/24;
+    startTS = ptcldidx;
 
     % Enumerate the flight paths for change of position
     for k=1:size(tgtTrvlPath{1},2)
@@ -125,7 +126,9 @@ for ptcldidx=2:numPtClds
     end
 end
 
-endTS = numPtClds * 1000/24;
+% endTS = numPtClds * 1000/24;
+endTS = numPtClds;
+
 % Enumerate entries and close their end intervals
 for i=1:size(hashMapArrays, 2)
     tgtHash = hashMapArrays{i};

@@ -1,0 +1,78 @@
+/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/etc/catkin/profile.d/99.roslisp.sh: line 21: /System/Volumes/Data/mathworks/devel/bat/B3p2/build/3p/derived/maci64/ros1/python_venv/bin/python3: No such file or directory
+[0/1] Re-running CMake...
+CMake Warning at /usr/local/Cellar/cmake/3.22.2/share/cmake/Modules/Platform/Darwin-Initialize.cmake:303 (message):
+  Ignoring CMAKE_OSX_SYSROOT value:
+
+   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
+
+  because the directory does not exist.
+Call Stack (most recent call first):
+  /usr/local/Cellar/cmake/3.22.2/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake:21 (include)
+  CMakeLists.txt:6 (project)
+
+
+-- Using CATKIN_DEVEL_PREFIX: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel
+-- Using CMAKE_PREFIX_PATH: /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1;/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages
+-- This workspace overlays: /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1;/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages
+-- Using PYTHON_EXECUTABLE: /Users/flyinglightspec/.matlab/R2022a/ros1/maci64/venv/bin/python3
+-- Using default Python package layout
+-- Using empy: /Users/flyinglightspec/.matlab/R2022a/ros1/maci64/venv/lib/python3.9/site-packages/em.py
+-- Using CATKIN_ENABLE_TESTING: off
+-- catkin 0.8.10
+-- BUILD_SHARED_LIBS is on
+/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/etc/catkin/profile.d/99.roslisp.sh: line 21: /System/Volumes/Data/mathworks/devel/bat/B3p2/build/3p/derived/maci64/ros1/python_venv/bin/python3: No such file or directory
+-- BUILD_SHARED_LIBS is on
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~  traversing 1 packages in topological order:
+-- ~~  - flyinglightspeck
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- +++ processing catkin package: 'flyinglightspeck'
+-- ==> add_subdirectory(flyinglightspeck)
+-- Disabling the following message generators: geneus;genlisp;gennodejs
+-- Using these message generators: gencpp;genpy
+-- flyinglightspeck: 1 messages, 1 services
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build
+ninja: no work to do.
+[1/6] cd /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build/flyinglightspeck && /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build/catkin_generated/env_cached.sh /Users/flyinglightspec/.matlab/R2022a/ros1/maci64/venv/bin/python3 /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py flyinglightspeck /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/msg/fls.msg std_msgs/Header
+[2/6] cd /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build/flyinglightspeck && /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build/catkin_generated/env_cached.sh /Users/flyinglightspec/.matlab/R2022a/ros1/maci64/venv/bin/python3 /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py flyinglightspeck /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/srv/ReadFLS.srv
+[3/6] Building CXX object flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_fls_message.cpp.o
+FAILED: flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_fls_message.cpp.o 
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DFLYINGLIGHTSPECK_BUILDING_LIBRARY -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"flyinglightspeck\" -Dclass_loader=ros1_class_loader -Dflyinglightspeck_matlab_EXPORTS -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel/include -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/include -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/console_bridge/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/Applications/MATLAB_R2022a.app/extern/include -I/Applications/MATLAB_R2022a.app/extern/include/MatlabDataArray -I/Applications/MATLAB_R2022a.app/toolbox/ros/include/ros1 -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/include/class_loader -I/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/bzip2/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/lz4/include -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/include/flyinglightspeck -O0 -mmacosx-version-min=11.6 -fPIC -std=gnu++14 -MD -MT flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_fls_message.cpp.o -MF flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_fls_message.cpp.o.d -o flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_fls_message.cpp.o -c /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/src/flyinglightspeck_fls_message.cpp
+In file included from /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/src/flyinglightspeck_fls_message.cpp:3:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time.hpp:51:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time/local_time/local_time.hpp:47:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time/posix_time/posix_time.hpp:50:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time/compiler_config.hpp:47:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/cstdlib:85:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/stdlib.h:93:15: fatal error: 'stdlib.h' file not found
+#include_next <stdlib.h>
+              ^~~~~~~~~~
+1 error generated.
+[4/6] Building CXX object flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_ReadFLS_service.cpp.o
+FAILED: flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_ReadFLS_service.cpp.o 
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DFLYINGLIGHTSPECK_BUILDING_LIBRARY -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"flyinglightspeck\" -Dclass_loader=ros1_class_loader -Dflyinglightspeck_matlab_EXPORTS -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel/include -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/include -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/console_bridge/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/Applications/MATLAB_R2022a.app/extern/include -I/Applications/MATLAB_R2022a.app/extern/include/MatlabDataArray -I/Applications/MATLAB_R2022a.app/toolbox/ros/include/ros1 -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/include/class_loader -I/Applications/MATLAB_R2022a.app/toolbox/ros/mlroscpp/custom_messages/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/bzip2/include -I/Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/lz4/include -I/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/include/flyinglightspeck -O0 -mmacosx-version-min=11.6 -fPIC -std=gnu++14 -MD -MT flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_ReadFLS_service.cpp.o -MF flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_ReadFLS_service.cpp.o.d -o flyinglightspeck/CMakeFiles/flyinglightspeck_matlab.dir/src/flyinglightspeck_ReadFLS_service.cpp.o -c /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/src/flyinglightspeck_ReadFLS_service.cpp
+In file included from /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src/flyinglightspeck/src/flyinglightspeck_ReadFLS_service.cpp:3:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time.hpp:51:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time/local_time/local_time.hpp:47:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time/posix_time/posix_time.hpp:50:
+In file included from /Applications/MATLAB_R2022a.app/sys/ros1/maci64/ros1/boost/include/boost/date_time/compiler_config.hpp:47:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/cstdlib:85:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/stdlib.h:93:15: fatal error: 'stdlib.h' file not found
+#include_next <stdlib.h>
+              ^~~~~~~~~~
+1 error generated.
+ninja: build stopped: subcommand failed.
+Base path: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64
+Source space: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/src
+Build space: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build
+Devel space: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/devel
+Install space: /Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/install
+####
+#### Running command: "ninja build.ninja" in "/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build"
+####
+####
+#### Running command: "ninja install install -j16 -l16" in "/Users/flyinglightspec/src/FLS-Multimedia2022/ROSbag/ROSpackages/matlab_msg_gen_ros1/maci64/build"
+####
+Invoking "ninja install install -j16 -l16" failed
