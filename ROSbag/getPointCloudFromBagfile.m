@@ -6,8 +6,8 @@ ply = [];
 
 for i=1:length(msgs)
     pt = [];
-    last_coord = 0;
-    last_color = 0;
+    lastCoord = 0;
+    lastColor = 0;
 
     wip = msgs{i}.Whatispresent;
     coords = msgs{i}.Coordinate;
@@ -16,26 +16,25 @@ for i=1:length(msgs)
 
     for j=1:length(durs)
         if char(wip(j)) == 'B'
-            last_coord = coords(j);
-            last_color = colors(j);
+            lastCoord = coords(j);
+            lastColor = colors(j);
         elseif char(wip(j)) == 'C'
-            last_color = colors(j);
+            lastColor = colors(j);
         else
-            last_coord = coords(j);
+            lastCoord = coords(j);
         end
 
         if durs(j).Start <= pid && pid < durs(j).End
             pt = [pt [
-                        last_coord.X
-                        last_coord.Y
-                        last_coord.Z
-                        last_color.R
-                        last_color.G
-                        last_color.B
-                        last_color.A
+                        lastCoord.X
+                        lastCoord.Y
+                        lastCoord.Z
+                        lastColor.R
+                        lastColor.G
+                        lastColor.B
+                        lastColor.A
                       ]
                    ];
-            disp(pt);
             break;
         end
     end
