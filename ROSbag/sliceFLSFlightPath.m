@@ -68,7 +68,7 @@ for i=1:length(msgs)
             end
         end
     end
-    msg = rosmessage('flyinglightspeck/fls2');
+    msg = rosmessage('flyinglightspeck/fls');
 
     msg.Whatispresent = newWip;
     msg.Coordinate = newCoords;
