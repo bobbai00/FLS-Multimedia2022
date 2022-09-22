@@ -1,0 +1,23 @@
+ply
+format ascii 1.0
+comment Created by Blender 3.0.1 - www.blender.org
+element vertex 9
+property float x
+property float y
+property float z
+property uchar red
+property uchar green
+property uchar blue
+property uchar alpha
+element face 63080
+property list uchar uint vertex_indices
+end_header
+5 5 5 130 10 24 255
+6 6 6 500 500 500 255
+7 7 7 127 10 24 255
+8 8 8 128 10 24 255
+9 9 9 127 10 24 255
+10 10 10 127 10 24 255
+11 12 13 127 10 24 255
+15 13 19 127 10 24 255
+21 23 29 127 10 24 255

@@ -8,13 +8,13 @@ totalIntraFlights=[];
 totalInterFlights=[];
 ColorChanges={};
 
-pathToCloudPointFiles='./TestClip/';
-% pathToCloudPointFiles='./RoseClip/';
+% pathToCloudPointFiles='./TestClip/';
+pathToCloudPointFiles='./RoseClip/';
 
 % Read the cubes in memory
 cpa=inMemoryCP(pathToCloudPointFiles,numFiles);
 
-% Use Motill to tonstruct the grids on the first point cloud
+% Use Motill to construct the grids on the first point cloud
 cpa{1}.createGrid(doReset, silent, cubeCapacity, 0, 0, 0, 0);
 
 % Use the grid of the first cloud point for the subsequent point clouds

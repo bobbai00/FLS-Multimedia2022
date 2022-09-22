@@ -20,6 +20,13 @@ classdef oneCube < handle
         neighbors {mustBeNumeric} = []
         colorCheckSum {mustBeInteger} = 0
         positionCheckSum {mustBeInteger} = 0
+        
+        % reliability properties
+        numOfChildren {mustBeInteger} = 0;
+        childrenIDs {mustBeInteger} = []
+        parentID {mustBeNumeric} = -1
+        disabled = 0
+
     end
     methods
         function obj = oneCube(id, maxCardinality)
@@ -84,41 +91,7 @@ classdef oneCube < handle
 
             obj.reComputeCheckSums(vertexList);
         end
-        %{
-        function numDups = removeDups(obj,vertexList)
-            % Iterate the assigned vertices
-            numDups = 0;
-            newVertices=[];
-            hashset=[];
-            for i=1:size(obj.assignedVertices,2)
-                pt = obj.assignedVertices(i);
-                coord=vertexList{pt};
-                tgtkey =  utilHashFunction(coord);
-                if any(hashset(:) == tgtkey)
-                    % Do nothing
-
-                    coord
-                    tgtkey
-                    numDups = numDups+1;
-                else
-                    newVertices(end+1)=pt;
-                    hashset(end+1)=tgtkey;
-                end
-            end
-            obj.assignedVertices = newVertices;
-            obj.numVertices = size(obj.assignedVertices,2);
-
-            obj.reComputeCheckSums(vertexList);
-        end
-        %}
-        %function obj = set.neighbors(obj, value)
-        %    if (value > 0)
-        %        obj.numNeighbors = obj.numNeighbors + 1;
-        %        obj.neighbors(obj.numNeighbors)=value;
-        %    else
-        %        error('The assigned vertex id must be a positive integer and index into the array of vertices.');
-        %    end
-        %end
+        
         function obj = assignNeighbor(obj, value)
             if (value > 0)
                 obj.numNeighbors = obj.numNeighbors + 1;
@@ -194,17 +167,38 @@ classdef oneCube < handle
                 error('The assigned vertex id must be a positive integer and index into the array of vertices.');
             end
         end
-        %function obj = set.assignedVertices(obj, value)
-        %    if (value > 0)
-        %        obj.numVertices = obj.numVertices + 1;
-        %        if (obj.numVertices > obj.maxVertices)
-        %            error('Overflow.  The cube is full.')
-        %            return
-        %        end
-        %        obj.assignedVertices(obj.numVertices)=value;
-        %    else
-        %        error('The assigned vertex id must be a positive integer and index into the array of vertices.');
-        %    end
-        %end
+    
+        % reliability methods
+        function obj = disable(obj)
+            % clear the assigned vertices
+            obj.positionCheckSum = 0;
+            obj.colorCheckSum = 0;
+            obj.assignedVertices = [];
+            obj.numVertices = 0;
+
+            % set the flag
+            obj.disabled = 1;
+        end
+
+        function r = isDisabled(obj)
+            r = obj.disabled;
+        end
+
+        function obj = addChildren(obj, childrenID)
+            obj.numOfChildren = obj.numOfChildren + 1;
+            obj.childrenIDs(obj.numOfChildren) = childrenID;
+        end
+
+        function r = hasChildren(obj)
+            r = 0;
+            if(obj.numOfChildren > 0)
+                r = 1;
+            end
+        end
+
+        function obj = setParent(obj, parentID)
+            obj.parentID = parentID;
+        end
+
     end
 end

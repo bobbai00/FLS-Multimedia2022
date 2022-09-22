@@ -174,5 +174,8 @@ classdef CloudPoint < handle
             %end
             obj.createGrid(true,silent,cubeCapacity,llArray,hlArray,dlArray,inputCubes)
         end
+        function cubes = getCubes(obj)
+            cubes = obj.cubes;
+        end
     end
 end
