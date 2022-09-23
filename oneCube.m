@@ -26,6 +26,7 @@ classdef oneCube < handle
         childrenIDs {mustBeInteger} = []
         parentID {mustBeNumeric} = -1
         disabled = 0
+        graphVertexList = []
 
     end
     methods
@@ -198,6 +199,15 @@ classdef oneCube < handle
 
         function obj = setParent(obj, parentID)
             obj.parentID = parentID;
+        end
+
+        function obj = updateVerticesFromChildren(obj, verticesHaveNoGroup, vertexList)
+            obj.disabled = 0;
+            obj.assignedVertices = verticesHaveNoGroup;
+            obj.numVertices = size(verticesHaveNoGroup, 2);
+            obj.reComputeCheckSums(vertexList);
+            obj.childrenIDs = [];
+            obj.numOfChildren = 0;
         end
 
     end
