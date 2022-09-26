@@ -1,44 +1,71 @@
-function centralizedFramework(filePath, G, pointCloudId)
-%UNTITLED 此处显示有关此函数的摘要
-%   此处显示详细说明
+function centralizedFramework(filePath, G, Delta, pointCloudId)
+
 doReset = false;
 silent = false;
 
-pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/TestClip/';
-% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
+MTTFofFlsInMinute = 6000.0; %minutes
+MTTRofFlsInMinute = 1 / 60; %minutes
+% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/TestClip/';
+pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
 
 
 filePath = strcat(pathPrefix, filePath);
 
 pointCloud=loadPointCloud(filePath, pointCloudId);
 
+fprintf("Test FilePath: %s\n", filePath);
+fprintf("Number of illuminating FLSs in a group: %d\n", G)
+fprintf("GroupFormationAlgorithm: centralized, StandbyFirstDynamicGAlgorithm\n");
+startTime = datetime('now');
+
 [~,~,~,cubeList] = spaceDivision(pointCloud, G, false);
+
+spaceDivisionFinishTime = datetime('now');
 
 % debug for cube
 % fprintf("\n\n Cubes: \n");
-% for i=1:size(cubeList, 2)
-%     cube = cubeList(i);
+
+pointInTotal = 0
+cardIndex = 0;
+for i=1:size(cubeList, 2)
+    cube = cubeList(i);
+    if ~cube.isDisabled()
+        cardinalityArr(cardIndex+1) = cube.cardinality();
+        cardIndex = cardIndex+1;
+        pointInTotal = pointInTotal + cube.cardinality();
+    end
+    % fprintf('cube: %d, cardinality: %d, parent: %d, children: [%s]\n', cube.identity, cube.cardinality(), cube.parentID, join(string(cube.childrenIDs), ','));
+end
+
+fprintf("total cardinality: %d\n", pointInTotal);
+histForCubeCardinality = drawHistogram(cardinalityArr, "histogram of cubes' cardinality", 'cardinality of cube', 'count of cubes');
+
+% rootCubeID = 1;
 % 
-%     fprintf('cube: %d, cardinality: %d, parent: %d, children: [%s]\n', cube.identity, cube.cardinality(), cube.parentID, join(string(cube.childrenIDs), ','));
-% end
-
-rootCubeID = 1;
-
-[reliabilityGroups, verticesHaveNoGroup] = centralizedGroupFormation(pointCloud, cubeList, rootCubeID, G);
-
-% if (size(verticesHaveNoGroup, 2) > 0)
-%     error("ERROR! There are FLSs that are not being grouped\n");
-% end
-
-% debug for groups
-% fprintf("\n\n Reliability Groups: \n");
-% for i=1:size(reliabilityGroups, 2)
-%     group = reliabilityGroups(i);
-%     group.calculateDistanceBetweenStandby(pointCloud.vertexList);
-%     fprintf('belonging cube id: %d; distance among standby: %f; distance among FLSs: %f\n', group.cubeID, group.distanceBetweenStandby, group.weight);
-% end
-
-reportReliabilityGroupStats(reliabilityGroups, pointCloud.vertexList, G);
+% groupFormationStartTime = datetime('now');
+% % [reliabilityGroups, verticesHaveNoGroup] = centralizedGroupFormation(pointCloud, cubeList, rootCubeID, G);
+% reliabilityGroups = centralizedGroupFormationNeighbor(pointCloud, cubeList, G, Delta);
+% 
+% % debug for groups
+% % fprintf("\n\n Reliability Groups: \n");
+% % for i=1:size(reliabilityGroups, 2)
+% %     group = reliabilityGroups(i);
+% %     fprintf('belonging cube id: %d; number of FLSs in it: %d\n', group.cubeID, size(group.assignedFLSs, 2));
+% % end
+% groupFormationEndTime = datetime('now');
+% 
+% 
+% reportReliabilityGroupStats(reliabilityGroups, pointCloud.vertexList, G, MTTFofFlsInMinute, MTTRofFlsInMinute);
+% 
+% % print time statistics
+% fprintf("space division start time: %s\n", datetime(startTime));
+% fprintf("space division finish time: %s\n", datetime(spaceDivisionFinishTime));
+% fprintf("group formation start time: %s\n", datetime(groupFormationStartTime));
+% fprintf("group formation finish time: %s\n", datetime(groupFormationEndTime));
+% spaceDivisionTimeInSeconds = seconds(spaceDivisionFinishTime - startTime);
+% groupFormationTimeInSeconds = seconds(groupFormationEndTime - groupFormationStartTime);
+% overallTimeInSeconds = seconds(spaceDivisionFinishTime - startTime + groupFormationEndTime - groupFormationStartTime);
+% fprintf("Overall time consumption: %f seconds\nSpace Division Time: %f seconds\nGroup Formation Time: %f seconds\n", overallTimeInSeconds, spaceDivisionTimeInSeconds, groupFormationTimeInSeconds);
 
 end
 

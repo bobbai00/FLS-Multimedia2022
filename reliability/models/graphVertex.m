@@ -1,7 +1,7 @@
 classdef graphVertex < handle
     
     properties
-
+        identity {mustBeInteger} = -1;
         vertices {mustBeInteger} = []
         numVertices {mustBeInteger} = 0
     end
@@ -11,7 +11,7 @@ classdef graphVertex < handle
             obj.vertices = vertices;
             obj.numVertices = size(vertices, 2);
         end
-        
+
         function dist = distance(obj, anotherGraphVertix, vertexList)
             vertices1 = obj.vertices;
             vertices2 = anotherGraphVertix.vertices;

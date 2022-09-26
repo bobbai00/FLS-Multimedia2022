@@ -37,7 +37,7 @@ for i=1:size(sortedVerticesWithDistance, 2)
 end
 
 group = reliabilityGroup(cube.identity, G, groupedFLSIndexList, vertexList);
-group.distanceBetweenStandby = dist;
+group.totalStandbyFlsFlyingDistance = dist;
 group.standbyFLSCoordinate = coordinateOfStandby;
 reliabilityGroups = group;
 end

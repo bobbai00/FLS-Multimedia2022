@@ -15,7 +15,7 @@ classdef reliabilityGroup < handle
         depthLineSegment {mustBeNumeric} = []
 
         standbyFLSCoordinate
-        distanceBetweenStandby = 0.0
+        totalStandbyFlsFlyingDistance = 0.0
 
     end
     
@@ -62,22 +62,77 @@ classdef reliabilityGroup < handle
                     minD = vertexCoor(3)*multiplier;
                 end
             end
-            obj.assignedFLSs = assignedFLSs;
+            obj.assignedFLSs = unique(assignedFLSs(:).');
             obj.widthLineSegment = [minW, maxW];
             obj.heightLineSegment = [minH, maxH];
             obj.depthLineSegment = [minD, maxD];
 
             obj.weight = calculateWeight(obj.assignedFLSs, vertexList);
+            obj.regardCenterAsStandbyFls(vertexList);
         end
         
+        function mttf = getMTTFInMinute(obj, mttfForFLSInMinute, mttrForFLSInMinute)
+            g = size(obj.assignedFLSs, 2);
+            c = 1;
+            p = mttrForFLSInMinute * 1.0 / (mttfForFLSInMinute * 1.0 / (g+c-1));
+            mttf = mttfForFLSInMinute * 1.0 / ((g+c) * p);
+        end
+
         function locationOfStandby = getLocationOfStandby(obj)
             locationOfStandby = [obj.standbyFLSCoordinate(1), obj.standbyFLSCoordinate(2), obj.standbyFLSCoordinate(3)];
         end
 
-        function obj = calculateDistanceBetweenStandby(obj, vertexList)
+        function maxDist = getMaxStandbyFlsFlyingDistance(obj, vertexList)
+            locationOfStandby = obj.getLocationOfStandby();
+            
+            maxDist = 0.0;
+            for i=1:size(obj.assignedFLSs, 2)
+                af = obj.assignedFLSs(i);
+                if (size(af.vertices, 2) > 1)
+                    error("Graph Vertex in reliability should not contains more than 1 vertex");
+                end
+
+                vid = af.vertices(1);
+                coordinateOfV = vertexList{vid};
+                locationOfV = [coordinateOfV(1), coordinateOfV(2), coordinateOfV(3)];
+                
+                dist = pdist([locationOfStandby; locationOfV]);
+                if dist > maxDist
+                    maxDist = dist;
+                end
+            end
+        end
+
+        function minDist = getMinStandbyFlsFlyingDistance(obj, vertexList)
+            locationOfStandby = obj.getLocationOfStandby();
+            
+            minDist = intmax;
+            for i=1:size(obj.assignedFLSs, 2)
+                af = obj.assignedFLSs(i);
+                if (size(af.vertices, 2) > 1)
+                    error("Graph Vertex in reliability should not contains more than 1 vertex");
+                end
+
+                vid = af.vertices(1);
+                coordinateOfV = vertexList{vid};
+                locationOfV = [coordinateOfV(1), coordinateOfV(2), coordinateOfV(3)];
+                
+                dist = pdist([locationOfStandby; locationOfV]);
+                if dist < minDist
+                    minDist = dist;
+                end
+            end
+        end
+
+        function avgDist = getAvgStandbyFlsFlyingDistance(obj, vertexList)
+            obj.calculateTotalStandbyFlsFlyingDistance(vertexList);
+            avgDist = obj.totalStandbyFlsFlyingDistance / size(obj.assignedFLSs, 2);
+        end
+
+        function obj = calculateTotalStandbyFlsFlyingDistance(obj, vertexList)
             
             tolerance = 0.000000000001;
-            if (abs(obj.distanceBetweenStandby - 0.0) > tolerance)
+            if (abs(obj.totalStandbyFlsFlyingDistance - 0.0) > tolerance)
                 return;
             end
             
@@ -97,7 +152,7 @@ classdef reliabilityGroup < handle
                 dist = dist + pdist([locationOfStandby; locationOfV]);
             end
 
-            obj.distanceBetweenStandby = dist;
+            obj.totalStandbyFlsFlyingDistance = dist;
             obj.weight = obj.weight + dist;
         end
         
@@ -108,7 +163,7 @@ classdef reliabilityGroup < handle
         function obj = regardCenterAsStandbyFls(obj, vertexList)
             standbyFlsCoordinate = findCenterCoordinate(obj.widthLineSegment, obj.heightLineSegment, obj.depthLineSegment);
             obj.standbyFLSCoordinate = standbyFlsCoordinate;
-            obj.calculateDistanceBetweenStandby(vertexList);
+            obj.calculateTotalStandbyFlsFlyingDistance(vertexList);
         end
     end
 end

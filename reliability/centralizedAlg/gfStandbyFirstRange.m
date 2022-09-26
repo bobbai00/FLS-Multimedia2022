@@ -1,5 +1,6 @@
-function [reliabilityGroups, verticesHaveNoGroup] = centralizedGroupFormation(pointCloud, cubeList, currentCubeID, G)
-
+function [reliabilityGroups, verticesHaveNoGroup] = gfStandbyFirstRange(pointCloud, cubeList, currentCubeID, G, Delta)
+% this framework is suitable for gfStandbyFirst & gfStandbyFirstDynamicG 
+%
 vertexList = pointCloud.vertexList;
 cube = cubeList(currentCubeID);
 
@@ -24,7 +25,7 @@ if (cube.numVertices < G && cube.parentID ~= -1)
     return;
 end
 
-% [rg, verticesHaveNoGroup] = gfGroupFirstBruteForce(cube, G, vertexList);
+% [rg, verticesHaveNoGroup] = gfStandbyFirstDynamicG(cube, G, vertexList);
 [rg, verticesHaveNoGroup] = gfStandbyFirst(cube, G, vertexList);
 
 reliabilityGroups = [reliabilityGroups, rg];

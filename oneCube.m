@@ -104,10 +104,10 @@ classdef oneCube < handle
         function obj = assignVertex(obj, value, width, height, depth, red, green, blue, alpha)
             if (value > 0)
                 obj.numVertices = obj.numVertices+1;
-                if (obj.numVertices > obj.maxVertices)
-                    error('Overflow.  The cube is full.')
-                    return
-                end
+%                 if (obj.numVertices > obj.maxVertices)
+%                     error('Overflow.  The cube is full.')
+%                     return
+%                 end
                 obj.assignedVertices(obj.numVertices)=value;
                 obj.positionCheckSum = obj.positionCheckSum + int64(width) + int64(height) + int64(depth);
                 obj.colorCheckSum = obj.colorCheckSum + int64(red) + int64(green) + int64(blue) + int64(alpha);

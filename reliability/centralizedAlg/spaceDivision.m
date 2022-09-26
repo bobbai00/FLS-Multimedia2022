@@ -193,7 +193,14 @@ end
 % Set the neighbor relationship
 for p=1:size(cubes,2)-1
     for q=p+1:size(cubes,2)
-        output = areTwoCubesNeighbors(cubes(p), cubes(q));
+        cubep = cubes(p);
+        cubeq = cubes(q);
+        
+        if cubep.isDisabled() || cubeq.isDisabled()
+            continue;
+        end
+
+        output = areTwoCubesNeighbors(cubep, cubeq);
         if output == 1
             cubes(p).assignNeighbor(q);
             cubes(q).assignNeighbor(p);

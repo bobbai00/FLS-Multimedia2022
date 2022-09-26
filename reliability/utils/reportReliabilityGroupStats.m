@@ -1,4 +1,4 @@
-function reportReliabilityGroupStats(reliabilityGroups, vertexList, G)
+function reportReliabilityGroupStats(reliabilityGroups, vertexList, G, mttfForFlsInMinute, mttrForFlsInMinute)
 
 fprintf("Reliability Group Statistics\n")
 
@@ -22,13 +22,24 @@ maxReliabilityGroupVerticesNumber = 0;
 
 totalStandbyFlsFlyingDistances = 0.0;
 totalGroupWeight = 0.0;
+totalPoints = 0;
 
+minMTTFForGroupInMinute = intmax;
+maxMTTFForGroupInMinute = 0;
+totalMTTFofGroups = 0.0;
 
 for i=1:size(reliabilityGroups, 2)
     group = reliabilityGroups(i);
-    group.calculateDistanceBetweenStandby(vertexList);
+    group.calculateTotalStandbyFlsFlyingDistance(vertexList);
+    
 
-    totalStandbyFlsFlyingDistances = group.distanceBetweenStandby + totalStandbyFlsFlyingDistances;
+    mttfForGroup = group.getMTTFInMinute(mttfForFlsInMinute, mttrForFlsInMinute);
+    maxStandbyFlyingDist = group.getMaxStandbyFlsFlyingDistance(vertexList);
+    minStandbyFlyingDist = group.getMinStandbyFlsFlyingDistance(vertexList);
+
+    totalPoints = totalPoints + size(group.assignedFLSs, 2);
+    totalMTTFofGroups = totalMTTFofGroups + mttfForGroup;
+    totalStandbyFlsFlyingDistances = group.getAvgStandbyFlsFlyingDistance(vertexList) + totalStandbyFlsFlyingDistances;
     totalGroupWeight = totalGroupWeight + group.weight;
 
     if size(group.assignedFLSs, 2) > maxReliabilityGroupVerticesNumber
@@ -39,13 +50,13 @@ for i=1:size(reliabilityGroups, 2)
         minReliabilityGroupVerticesNumber = size(group.assignedFLSs, 2);
     end
 
-    if group.distanceBetweenStandby > maxStandbyFlsFlyingDistances
-        maxStandbyFlsFlyingDistances = group.distanceBetweenStandby;
+    if maxStandbyFlyingDist > maxStandbyFlsFlyingDistances
+        maxStandbyFlsFlyingDistances = maxStandbyFlyingDist;
         maxStandbyFlsGroupIndex = i;
     end
 
-    if group.distanceBetweenStandby < minStandbyFlsFlyingDistances
-        minStandbyFlsFlyingDistances = group.distanceBetweenStandby;
+    if minStandbyFlyingDist < minStandbyFlsFlyingDistances
+        minStandbyFlsFlyingDistances = minStandbyFlyingDist;
         minStandbyFlsGroupIndex = i;
     end
 
@@ -57,6 +68,14 @@ for i=1:size(reliabilityGroups, 2)
     if group.weight < minGroupWeight
         minGroupWeightIndex = i;
         minGroupWeight = group.weight;
+    end
+    
+    if mttfForGroup > maxMTTFForGroupInMinute
+        maxMTTFForGroupInMinute = mttfForGroup;
+    end
+
+    if mttfForGroup < minMTTFForGroupInMinute
+        minMTTFForGroupInMinute = mttfForGroup;
     end
 
     if group.getNumberOfVertices() < minGroupVerticesNum
@@ -71,14 +90,23 @@ for i=1:size(reliabilityGroups, 2)
 end
 
 fprintf("Total Reliability Group Number = %d, G: %d\n", size(reliabilityGroups, 2), G);
+
+fprintf("Total Points = %d\n", totalPoints);
 fprintf("Min Reliability Group Vertices Number = %d, Group Index: %d\n", minGroupVerticesNum, minGroupVerticesNumIndex);
 fprintf("Max Reliability Group Vertices Number = %d, Group Index: %d\n", maxGroupVerticesNum, maxGroupVerticesNumIndex);
+
 fprintf("Min Standby FLS Flying Distance = %f, Group Index = %d\n", minStandbyFlsFlyingDistances, minStandbyFlsGroupIndex);
 fprintf("Max Standby FLS Flying Distance = %f, Group Index = %d\n", maxStandbyFlsFlyingDistances, maxStandbyFlsGroupIndex);
+fprintf("Average Standby FLS Flying Distance = %f\n", totalStandbyFlsFlyingDistances / size(reliabilityGroups, 2));
+
 fprintf("Min Group Weight = %f, Group Index = %d\n", minGroupWeight, minGroupWeightIndex);
 fprintf("Max Group Weight = %f, Group Index = %d\n", maxGroupWeight, maxGroupWeightIndex);
-fprintf("Average Standby FLS Flying Distance = %f\n", totalStandbyFlsFlyingDistances / size(reliabilityGroups, 2));
 fprintf("Average Group Weight Distance = %f\n", totalGroupWeight / size(reliabilityGroups, 2));
+
+
+fprintf("Min MTTFgroup = %f minutes\n", minMTTFForGroupInMinute);
+fprintf("Max MTTFgroup = %f minutes\n", maxMTTFForGroupInMinute);
+fprintf("Average MTTFgroup = %f minutes\n", totalMTTFofGroups / size(reliabilityGroups, 2));
 
 end
 
