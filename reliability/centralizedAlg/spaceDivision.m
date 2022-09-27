@@ -30,9 +30,9 @@ cubeID=1;
 % Here is the first cube for the entire point set.
 o1=oneCube(cubeID,cubeCapacity);
 
-o1.widthLineSegment=[0,maxL+1];
-o1.heightLineSegment=[0,maxH+1];
-o1.depthLineSegment=[0,maxD+1];
+o1.widthLineSegment=[0.0,maxL+1.0];
+o1.heightLineSegment=[0.0,maxH+1.0];
+o1.depthLineSegment=[0.0,maxD+1.0];
 
 cubes(cubeID) = o1;
 
@@ -54,6 +54,9 @@ for i=1:size(pointCloud.vertexList,2)
     tgtCubeID = findCube(llArray, hlArray, dlArray, currV);
     % Check to see if the target cube overflows.  If so then split the cube
     tgtCube = cubes(tgtCubeID);
+    if tgtCube.isDisabled()
+        continue;
+    end
     if tgtCube.isFull()
         % Construct the new cubeID
         cubeID = cubeID + 1;
@@ -85,15 +88,16 @@ for i=1:size(pointCloud.vertexList,2)
             end
 
             % Construct new line segments and assign to the array
+            
+
             lsOne = lineSegment(twoCube(1).widthLineSegment(1), twoCube(1).widthLineSegment(2));
             lsOne.addCube(twoCube(1).identity);
-            sz=size(llArray,2);
-            llArray(sz+1)=lsOne;
+            llArray = addLineSegToArray(llArray, lsOne);
 
             lsTwo = lineSegment(twoCube(2).widthLineSegment(1), twoCube(2).widthLineSegment(2));
             lsTwo.addCube(twoCube(2).identity);
-            sz=size(llArray,2);
-            llArray(sz+1)=lsTwo;
+            llArray = addLineSegToArray(llArray, lsTwo);
+
 
             tgtLSH1 = findLineSegIDX(hlArray, twoCube(1).heightLineSegment(1), twoCube(1).heightLineSegment(2));
             hlArray(tgtLSH1).addCube(twoCube(1).identity);
@@ -122,13 +126,13 @@ for i=1:size(pointCloud.vertexList,2)
             % Construct new line segments and assign to the array
             lsOne = lineSegment(twoCube(1).heightLineSegment(1), twoCube(1).heightLineSegment(2));
             lsOne.addCube(twoCube(1).identity);
-            sz=size(hlArray,2);
-            hlArray(sz+1)=lsOne;
+            hlArray = addLineSegToArray(hlArray, lsOne);
+
 
             lsTwo = lineSegment(twoCube(2).heightLineSegment(1), twoCube(2).heightLineSegment(2));
             lsTwo.addCube(twoCube(2).identity);
-            sz=size(hlArray,2);
-            hlArray(sz+1)=lsTwo;
+            hlArray = addLineSegToArray(hlArray, lsTwo);
+
 
             % Add the new cube to their corresponding width and height line
             % segments
@@ -161,13 +165,11 @@ for i=1:size(pointCloud.vertexList,2)
             % Construct new line segments and assign to the array
             lsOne = lineSegment(twoCube(1).depthLineSegment(1), twoCube(1).depthLineSegment(2));
             lsOne.addCube(twoCube(1).identity);
-            sz=size(dlArray,2);
-            dlArray(sz+1)=lsOne;
+            dlArray = addLineSegToArray(dlArray, lsOne);
 
             lsTwo = lineSegment(twoCube(2).depthLineSegment(1), twoCube(2).depthLineSegment(2));
             lsTwo.addCube(twoCube(2).identity);
-            sz=size(dlArray,2);
-            dlArray(sz+1)=lsTwo;
+            dlArray = addLineSegToArray(dlArray, lsTwo);
 
             % Add the new cube to their corresponding width and height line
             % segments

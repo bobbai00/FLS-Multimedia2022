@@ -1,4 +1,4 @@
-function centralizedFramework(filePath, G, Delta, pointCloudId)
+function centralizedFramework(filePath, isFromPrinceton, G, Delta, pointCloudId)
 
 doReset = false;
 silent = false;
@@ -6,12 +6,13 @@ silent = false;
 MTTFofFlsInMinute = 6000.0; %minutes
 MTTRofFlsInMinute = 1 / 60; %minutes
 % pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/TestClip/';
+% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/PrincetonClip/';
 pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
 
 
 filePath = strcat(pathPrefix, filePath);
 
-pointCloud=loadPointCloud(filePath, pointCloudId);
+pointCloud=loadPointCloud(filePath, pointCloudId, isFromPrinceton);
 
 fprintf("Test FilePath: %s\n", filePath);
 fprintf("Number of illuminating FLSs in a group: %d\n", G)
