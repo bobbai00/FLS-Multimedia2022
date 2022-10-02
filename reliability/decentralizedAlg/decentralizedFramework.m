@@ -1,4 +1,4 @@
-function centralizedFramework(filePath, isFromPrinceton, G, Delta, pointCloudId)
+function decentralizedFramework(filePath, isFromPrinceton, G, Delta, pointCloudId)
 
 doReset = false;
 silent = false;
@@ -6,8 +6,8 @@ silent = false;
 MTTFofFlsInMinute = 6000.0; %minutes
 MTTRofFlsInMinute = 1 / 60; %minutes
 % pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/TestClip/';
-pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/PrincetonClip/';
-% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
+% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/PrincetonClip/';
+pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
 
 
 filePath = strcat(pathPrefix, filePath);
@@ -26,7 +26,7 @@ spaceDivisionFinishTime = datetime('now');
 % debug for cube
 % fprintf("\n\n Cubes: \n");
 
-pointInTotal = 0
+pointInTotal = 0;
 cardIndex = 0;
 for i=1:size(cubeList, 2)
     cube = cubeList(i);
@@ -38,8 +38,11 @@ for i=1:size(cubeList, 2)
     % fprintf('cube: %d, cardinality: %d, parent: %d, children: [%s]\n', cube.identity, cube.cardinality(), cube.parentID, join(string(cube.childrenIDs), ','));
 end
 
-fprintf("total cardinality: %d\n", pointInTotal);
-histForCubeCardinality = drawHistogram(cardinalityArr, "histogram of cubes' cardinality", 'cardinality of cube', 'count of cubes');
+% fprintf("total cardinality: %d\n", pointInTotal);
+% histForCubeCardinality = drawHistogram(cardinalityArr, "histogram of cubes' cardinality", 'cardinality of cube', 'count of cubes');
+
+scheduler = flsScheduler(1000, 100, 3, G, cubeList, pointCloud.vertexList);
+scheduler.start();
 
 % rootCubeID = 1;
 % 
