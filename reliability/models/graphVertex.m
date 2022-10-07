@@ -7,7 +7,8 @@ classdef graphVertex < handle
     end
     
     methods
-        function obj = graphVertex(vertices)
+        function obj = graphVertex(identity, vertices)
+            obj.identity = identity;
             obj.vertices = vertices;
             obj.numVertices = size(vertices, 2);
         end

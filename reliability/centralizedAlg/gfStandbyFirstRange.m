@@ -21,7 +21,7 @@ end
 % update cube
 cube = cube.updateVerticesFromChildren(verticesHaveNoGroup, vertexList);
 
-if (cube.numVertices < G && cube.parentID ~= -1)
+if (cube.numVertices < G-Delta && cube.parentID ~= -1)
     return;
 end
 

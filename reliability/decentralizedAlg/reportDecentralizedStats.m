@@ -1,31 +1,53 @@
-function reportDecentralizedStats(cliqueIDsByRounds, numOfFls, G, cliqueList)
+function reportDecentralizedStats(figPrefix, cliqueStatByRounds, G)
     numberOfFlsInGroupForRounds = {};
-    numberOfFullCliquesForRounds = [];
+    weightOfCliquesForRounds = {};
+    portionOfFullCliquesForRounds = [];
     minWeightCliquesForRounds = [];
     averageWeightCliquesForRounds = [];
     maxWeightCliquesForRounds = [];
 
-    for i = 1:size(cliqueIDsByRounds, 2)
-        cliqueIDs = cliqueIDsByRounds{i};
+    for i = 1:size(cliqueStatByRounds, 2)
+        cliqueStats = cliqueStatByRounds{i};
         numOfFullCliques = 0;
         numOfFlsOfCliques = [];
-        for j = 1:size(cliqueIDs, 2)
-            clique = cliqueList(j);
-            if clique.isCliqueFull()
+        weightOfCliques = [];
+        for j = 1:size(cliqueStats, 2)
+            clique = cliqueStats{j};
+            numFLSs = clique(2);
+            weight = clique(3);
+            if numFLSs >= G
                 numOfFullCliques = numOfFullCliques + 1;
             end
-            numOfFlsOfCliques = [numOfFlsOfCliques, clique.numFLSs]
+            numOfFlsOfCliques(j) = numFLSs;
+            weightOfCliques(j) = weight;
         end
-        numberOfFullCliquesForRounds = [numberOFFullCliquesForRounds, numOfFullCliques];
+        portionOfFullCliquesForRounds(i) = numOfFullCliques * 100.0 / (size(cliqueStats, 2) * 1.0);
         numberOfFlsInGroupForRounds{i} = numOfFlsOfCliques;
+        weightOfCliquesForRounds{i} = weightOfCliques;
     end
 
-    cliqueIDsForFinalRound = cliqueIDsByRounds{end};
+    cliqueIDsForFinalRound = cliqueStatByRounds{end};
     for i = 1:size(cliqueIDsForFinalRound, 2)
-        cid = cliqueIDsForFinalRound(i);
-        clique = cliqueList(cid);
-        minWeightCliquesForRounds(i) = clique.getMinWeightEdge();
-        maxWeightCliquesForRounds(i) = clique.getMaxWeightEdge();
-        averageWeightCliquesForRounds(i) = clique.getAverageWeightEdge();
+        clique = cliqueStats{i};
+        minWeightCliquesForRounds(i) = clique(4);
+        maxWeightCliquesForRounds(i) = clique(5);
+        averageWeightCliquesForRounds(i) = clique(6);
     end
+
+    firstRoundNumFlsInClique = numberOfFlsInGroupForRounds{1};
+    midRoundNumFlsInClique = numberOfFlsInGroupForRounds{floor(size(cliqueStatByRounds, 2) / 2)};
+    lastRoundNumFlsInClique = numberOfFlsInGroupForRounds{end};
+    
+    firstRoundWeightsInClique = weightOfCliquesForRounds{1};
+    midRoundWeightsInClique = weightOfCliquesForRounds{floor(size(cliqueStatByRounds, 2) / 2)};
+    lastRoundWeightsInClique = weightOfCliquesForRounds{end};
+
+    filename = sprintf("%s/var.mat", figPrefix);
+    save(filename);
+    
+    graphPrefix = sprintf("%s/graph-", figPrefix);
+    drawLineGraphForPortionOfFLSsInClique(graphPrefix, 1, size(cliqueStatByRounds, 2), 5, portionOfFullCliquesForRounds)
+    drawHistogramForNumFLS(graphPrefix, firstRoundNumFlsInClique, midRoundNumFlsInClique, lastRoundNumFlsInClique);
+    drawHistogramForEdgeWeight(graphPrefix, minWeightCliquesForRounds, maxWeightCliquesForRounds, averageWeightCliquesForRounds);
+    drawHistogramForWeightDistribution(graphPrefix, firstRoundWeightsInClique, midRoundWeightsInClique, lastRoundWeightsInClique);
 end

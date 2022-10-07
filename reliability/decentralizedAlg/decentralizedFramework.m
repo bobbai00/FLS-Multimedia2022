@@ -6,8 +6,8 @@ silent = false;
 MTTFofFlsInMinute = 6000.0; %minutes
 MTTRofFlsInMinute = 1 / 60; %minutes
 % pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/TestClip/';
-% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/PrincetonClip/';
-pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
+pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/PrincetonClip/';
+% pathPrefix = '/Users/baijiadong/Desktop/shaharam-lab/FLS-Multimedia2022/RoseClip/';
 
 
 filePath = strcat(pathPrefix, filePath);
@@ -41,8 +41,17 @@ end
 % fprintf("total cardinality: %d\n", pointInTotal);
 % histForCubeCardinality = drawHistogram(cardinalityArr, "histogram of cubes' cardinality", 'cardinality of cube', 'count of cubes');
 
-scheduler = flsScheduler(1000, 100, 3, G, cubeList, pointCloud.vertexList);
+% schedulerForTenRounds = flsScheduler(1, 1000, 10, 1, G, cubeList, pointCloud.vertexList);
+% schedulerForTenRounds.start();
+
+scheduler = flsScheduler(1, 100, 10000, 1, G, Delta, cubeList, pointCloud.vertexList);
 scheduler.start();
+% 
+% schedulerFor20Rounds = flsScheduler(1, 1000, 20, 1, G, cubeList, pointCloud.vertexList);
+% schedulerFor20Rounds.start();
+filePrefix = "results/race-car-1510/globalNeighbor-100p-10k-m1";
+reportDecentralizedStats(filePrefix, scheduler.latestCliqueAtEachRound, G);
+
 
 % rootCubeID = 1;
 % 
