@@ -69,7 +69,9 @@ classdef clique < handle
         function [selectedFlsIDs, prunedFlsIDs] = setStandbyAndRuleOutNodes(obj, flsList)
             selectedFlsIDs = obj.flsIDs;
             prunedFlsIDs = [];
-            if obj.numFLSs <= obj.G
+            numF = obj.numFLSs;
+
+            if numF < obj.G-obj.Delta || obj.isCliqueFull()
                 return;
             end
             
@@ -130,7 +132,7 @@ classdef clique < handle
 
             for i = 1:obj.numFLSs
                 id = sortedCoorWithDistance(1, i);
-                if i <= obj.G
+                if i <= obj.G % G or [G-Delta, G+Delta]
                     selectedFlsIDs = [selectedFlsIDs, id];
                 else
                     prunedFlsIDs = [prunedFlsIDs, id];

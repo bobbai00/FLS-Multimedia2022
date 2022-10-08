@@ -19,7 +19,7 @@ fprintf("Number of illuminating FLSs in a group: %d\n", G)
 fprintf("GroupFormationAlgorithm: centralized, StandbyFirstDynamicGAlgorithm\n");
 startTime = datetime('now');
 
-[~,~,~,cubeList] = spaceDivision(pointCloud, G, false);
+[~,~,~,cubeList] = spaceDivision(pointCloud, 2*G, false);
 
 spaceDivisionFinishTime = datetime('now');
 
@@ -39,17 +39,18 @@ for i=1:size(cubeList, 2)
 end
 
 % fprintf("total cardinality: %d\n", pointInTotal);
+% drawHistogramForCube(cardinalityArr);
 % histForCubeCardinality = drawHistogram(cardinalityArr, "histogram of cubes' cardinality", 'cardinality of cube', 'count of cubes');
 
 % schedulerForTenRounds = flsScheduler(1, 1000, 10, 1, G, cubeList, pointCloud.vertexList);
 % schedulerForTenRounds.start();
 
-scheduler = flsScheduler(1, 100, 10000, 1, G, Delta, cubeList, pointCloud.vertexList);
+scheduler = flsScheduler(1, 1, 1, pointInTotal, 10, 1, G, Delta, cubeList, pointCloud.vertexList);
 scheduler.start();
 % 
 % schedulerFor20Rounds = flsScheduler(1, 1000, 20, 1, G, cubeList, pointCloud.vertexList);
 % schedulerFor20Rounds.start();
-filePrefix = "results/race-car-1510/globalNeighbor-100p-10k-m1";
+filePrefix = "results/race-car-1510/heuristic1/heuristic-T40-G20-D0-R10-m1";
 reportDecentralizedStats(filePrefix, scheduler.latestCliqueAtEachRound, G);
 
 

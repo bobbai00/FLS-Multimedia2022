@@ -18,7 +18,7 @@ function reportTestCaseStats(figPrefix, cliqueStatByRounds, G, cliqueList)
             clique = cliqueStats{j};
             numFLSs = clique(2);
             weight = clique(3);
-            if numFLSs >= G
+            if clique(end)
                 numOfFullCliques = numOfFullCliques + 1;
             end
             numOfFlsOfCliques(j) = numFLSs;
@@ -39,7 +39,7 @@ function reportTestCaseStats(figPrefix, cliqueStatByRounds, G, cliqueList)
         averageWeightCliquesForRounds(i) = clique(6);
 
         maxEVect = maxEdgeOfCliqueOfDifferentCard{numOfFls};
-        maxEVect = [maxEVect, weightOfClique];
+        maxEVect = [maxEVect, maxWeightCliquesForRounds(i)];
         maxEdgeOfCliqueOfDifferentCard{numOfFls} = maxEVect;
 
         weightVect = weightOfCliqueOfDifferentCard{numOfFls};
@@ -63,10 +63,24 @@ function reportTestCaseStats(figPrefix, cliqueStatByRounds, G, cliqueList)
     drawLineGraphForPortionOfFLSsInClique(graphPrefix, 1, size(cliqueStatByRounds, 2), 5, portionOfFullCliquesForRounds)
     drawHistogramForNumFLS(graphPrefix, firstRoundNumFlsInClique, midRoundNumFlsInClique, lastRoundNumFlsInClique);
     if G==5
-        drawWeightHistFor4CliqueSize(figPrefix, weightOfCliqueOfDifferentCard{2}, weightOfCliqueOfDifferentCard{3}, weightOfCliqueOfDifferentCard{4}, weightOfCliqueOfDifferentCard{5});
-        drawMaxEdgeHistFor4CliqueSize(figPrefix, maxEdgeOfCliqueOfDifferentCard{2}, maxEdgeOfCliqueOfDifferentCard{3}, maxEdgeOfCliqueOfDifferentCard{4}, maxEdgeOfCliqueOfDifferentCard{5});
+        w2 = weightOfCliqueOfDifferentCard{2}
+        w3 = weightOfCliqueOfDifferentCard{3}
+        w4 = weightOfCliqueOfDifferentCard{4}
+        w5 = weightOfCliqueOfDifferentCard{5}
+        drawWeightHistFor4CliqueSize(figPrefix, w2, w3, w4, w5);
+
+        e2 = maxEdgeOfCliqueOfDifferentCard{2}
+        e3 = maxEdgeOfCliqueOfDifferentCard{3}
+        e4 = maxEdgeOfCliqueOfDifferentCard{4}
+        e5 = maxEdgeOfCliqueOfDifferentCard{5}
+        drawMaxEdgeHistFor4CliqueSize(figPrefix, e2, e3, e4, e5);
     elseif G==3
-        drawWeightHistFor2CliqueSize(figPrefix, weightOfCliqueOfDifferentCard{2}, weightOfCliqueOfDifferentCard{3});
-        drawMaxEdgeHistFor2CliqueSize(figPrefix, maxEdgeOfCliqueOfDifferentCard{2}, maxEdgeOfCliqueOfDifferentCard{3});
+        w2 = weightOfCliqueOfDifferentCard{2}
+        w3 = weightOfCliqueOfDifferentCard{3}
+        drawWeightHistFor2CliqueSize(figPrefix, w2, w3);
+
+        e2 = maxEdgeOfCliqueOfDifferentCard{2}
+        e3 = maxEdgeOfCliqueOfDifferentCard{3}
+        drawMaxEdgeHistFor2CliqueSize(figPrefix, e2, e3);
     end
 end

@@ -127,7 +127,7 @@ classdef flsScheduler < handle
                     for i = 1:size(latestCliqueIDs, 2)
                         cid = latestCliqueIDs(i);
                         clique = obj.cliqueList(cid);
-                        cliqueFlsIDs{i} = [clique.identity, clique.numFLSs, clique.weight, clique.minEdgeWeight, clique.maxEdgeWeight, clique.getAverageWeightEdge()];
+                        cliqueFlsIDs{i} = [clique.identity, clique.numFLSs, clique.weight, clique.minEdgeWeight, clique.maxEdgeWeight, clique.getAverageWeightEdge(), clique.isCliqueFull()];
                     end
                     obj.latestCliqueAtEachRound{rounds} = cliqueFlsIDs;
                     
