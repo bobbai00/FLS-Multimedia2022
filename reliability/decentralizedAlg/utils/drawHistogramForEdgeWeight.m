@@ -1,3 +1,4 @@
+
 function drawHistogramForEdgeWeight(figPrefix, minWeights, maxWeights, averageWeights) 
     figure3 = figure;
 

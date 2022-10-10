@@ -66,7 +66,8 @@ for i=1:size(pointCloud.vertexList,2)
         % Dimension to split along
         dimID = mod(cubeID-1, 3)+1;
         % Split the cube into two to obtain a new object
-        [twoCube, newTgtCube] = splitCube(tgtCube, dimID, pointCloud.vertexList, newCubeID1, newCubeID2, cubeCapacity, i);
+%         [twoCube, newTgtCube] = splitCube(tgtCube, dimID, pointCloud.vertexList, newCubeID1, newCubeID2, cubeCapacity, i);
+        [twoCube, newTgtCube, dimID] = splitCubeEvenly(tgtCube, dimID, pointCloud.vertexList, newCubeID1, newCubeID2, cubeCapacity, i);
         tgtCube = newTgtCube;
         % Repair the cubeArray
         cubes(twoCube(1).identity)=twoCube(1);

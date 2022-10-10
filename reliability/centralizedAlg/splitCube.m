@@ -19,10 +19,6 @@ sortedVT=sortrows(vTbl,2,'ascend'); %Sort in descending distance
 % Get the mid point. 
 midRow = fix( (j+1)/2 ) + 1;  % Plus 1 because end of the range is exclusive
 
-if tgtCube.identity == 15
-    fprintf("the world\n");
-end
-
 revMin = sortedVT(1,2);
 revMax = sortedVT(midRow,2);
 newMin = sortedVT(midRow,2);

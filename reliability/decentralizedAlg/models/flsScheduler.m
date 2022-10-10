@@ -30,10 +30,19 @@ classdef flsScheduler < handle
         filePrefix
         latestCliqueAtEachRound = {}
 
+        % cube priority
+        isEnableCubePriority
+        M
+        cubesWithHops = {}
+        cubeFLSsWithHops = {}
+        cidToPid
     end
     
     methods
-        function obj = flsScheduler(isUsingHeuristic, whichHeuristicToUse, hopsForThirdHeu, numFLSs, maxRounds, shardForSingleFLS, G, Delta, cubeList, vertexList)
+        function obj = flsScheduler(isEnableCubePriority, M, isUsingHeuristic, whichHeuristicToUse, hopsForThirdHeu, numFLSs, maxRounds, shardForSingleFLS, G, Delta, cubeList, vertexList)
+            obj.isEnableCubePriority = isEnableCubePriority;
+            obj.M = M;
+            
             obj.isUsingHeuristic = isUsingHeuristic;
             obj.hopsForThirdHeu = hopsForThirdHeu;
             obj.whichHeuristicToUse = whichHeuristicToUse;
@@ -63,7 +72,9 @@ classdef flsScheduler < handle
                     obj.flsToCliques{indexOfFls} = [];
                     
                     newFls = fls(indexOfFls, obj.isUsingHeuristic, obj, obj.shardForSingleFLS, obj.G, obj.Delta, obj.vertexList(v));
-                    
+                    if obj.isEnableCubePriority
+                        newFls.enableCubePriority(obj.M);
+                    end
                     cubeFlsIdList = [cubeFlsIdList, indexOfFls];
 
                     obj.flsList = [obj.flsList, newFls];
@@ -79,8 +90,10 @@ classdef flsScheduler < handle
                     break;
                 end
             end
-
-            if ~obj.isUsingHeuristic
+            
+            if obj.isEnableCubePriority
+                obj.initCubePriority();
+            elseif ~obj.isUsingHeuristic
                 for i = 1:size(obj.flsList, 2)
                     obj.flsList(i).neighborFlsIds = obj.flsIdList;
                     obj.flsList(i).numberOfNeighbors = size(obj.flsIdList, 2);
@@ -113,7 +126,7 @@ classdef flsScheduler < handle
             while currentId < obj.numFLSs
                 
                 currentFls = obj.flsList(currentId);
-                currentFls.startWithoutHeuristic();
+                currentFls.start();
 
                 currentId = currentId + 1;
                 if currentId >= obj.numFLSs
@@ -261,6 +274,124 @@ classdef flsScheduler < handle
             cids = obj.flsToCliques{fid};
             if size(cids, 2) == 0
                 r = 0;
+            end
+        end
+        
+        % cube priority
+
+        function flsSet = convertVidsToFids(obj, vids)
+            flsSet = [];
+            for i = 1:size(vids, 2)
+                vid = vids(i);
+                flsSet = [flsSet, obj.vidToFid(vid)];
+            end
+        end
+
+        function flsSet = convertCidsToFids(obj, cids)
+            flsSet = [];
+            for i = 1:size(cids, 2)
+                cid = cids(i);
+                cube = obj.cubeList(cid);
+
+                temp = obj.convertVidsToFids(cube.assignedVertices);
+                flsSet = [flsSet, temp];
+            end
+            flsSet = unique(flsSet(:).');
+        end
+
+        function obj = reassignFlsNextHopNeighbor(obj, f, cid, previousRoundNeighborIDs, nextHopFlsID)
+            previousRoundNeighborIDs = [previousRoundNeighborIDs, nextHopFlsID];
+            previousRoundNeighborIDs = unique(previousRoundNeighborIDs(:).');
+            f.initNeighbor(cid, previousRoundNeighborIDs);
+        end
+
+        function addNextHopNeighbor(obj, flsID)
+            f = obj.flsList(flsID);
+            cid = f.cubeID;
+            pid = obj.cidToPid(cid);
+            p = obj.cubesWithHops{pid};
+            fp = obj.cubeFLSsWithHops{pid};
+            expectingAlpha = f.alpha;
+            previousRoundNeighborIDs = f.neighborFlsIds;
+
+            if size(p, 2) < expectingAlpha
+                error("ERROR: expecting Alpha is greater than already hold neighbors");
+            end
+            if size(p, 2) > expectingAlpha
+                % already calculated
+                index = expectingAlpha + 1;
+                % cids = p{index};
+                % flsSet = obj.convertCidsToFids(cids);
+                flsSet = fp{expectingAlpha};
+                obj.reassignFlsNextHopNeighbor(f, f.cubeID, previousRoundNeighborIDs, flsSet);
+                return;
+            end
+
+            isVisited = zeros(1, obj.numFLSs, 'int8');
+
+            for i = 1:size(p, 2)
+                cids = p{i};
+                for j = 1:size(cids, 2)
+                    cid = cids(j);
+                    isVisited(cid) = 1;
+                end
+                if i == expectingAlpha
+                    lastHopCids = cids;
+                end
+            end
+            
+            nextHopCids = [];
+            for i = 1:size(lastHopCids, 2)
+                cid = lastHopCids(i);
+                cube = obj.cubeList(cid);
+
+                neighborCubeIDs = cube.neighbors;
+                for j = 1:size(neighborCubeIDs, 2)
+                    ncid = neighborCubeIDs(j);
+                    ncube = obj.cubeList(ncid);
+                    if ~ncube.isDisabled()
+                        nextHopCids = [nextHopCids, ncid];
+                    end
+                end
+            end
+            p{end+1} = nextHopCids;
+            obj.cubesWithHops{pid} = p;
+
+            nextHopFids = obj.convertCidsToFids(nextHopCids);
+            fp{end+1} = nextHopFids;
+            obj.cubeFLSsWithHops{pid} = fp;
+
+            obj.reassignFlsNextHopNeighbor(f, f.cubeID, previousRoundNeighborIDs, nextHopFids);
+        end
+
+        function obj = initCubePriority(obj)
+            if ~obj.isEnableCubePriority
+                error("Error: cube priority is not enabled");
+            end
+
+            obj.cidToPid = containers.Map('KeyType','int32','ValueType','int32');
+            obj.cubesWithHops = {};
+            pid = 1;
+            for i = 1:size(obj.cubeList, 2)
+                cube = obj.cubeList(i);
+                if cube.isDisabled() || cube.numVertices == 0
+                    continue;
+                end
+                cubeId = cube.identity;
+                
+                vertices = cube.assignedVertices;
+                flsSet = obj.convertVidsToFids(vertices);
+                for j = 1:size(vertices, 2)
+                    vid = vertices(j);
+                    fid = obj.vidToFid(vid);
+                    obj.flsList(fid).initNeighbor(cubeId, flsSet);
+                end
+
+                % initHop is the vertices with 0 hops(cube itself)
+                obj.cubesWithHops{pid} = {cubeId};
+                obj.cubeFLSsWithHops{pid} = {};
+                obj.cidToPid(cubeId) = pid;
+                pid = pid + 1;
             end
         end
     end

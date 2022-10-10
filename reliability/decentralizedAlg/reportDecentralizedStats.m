@@ -27,11 +27,15 @@ function reportDecentralizedStats(figPrefix, cliqueStatByRounds, G)
     end
 
     cliqueIDsForFinalRound = cliqueStatByRounds{end};
+    fullCliquesAtFinalRound = [];
     for i = 1:size(cliqueIDsForFinalRound, 2)
         clique = cliqueStats{i};
         minWeightCliquesForRounds(i) = clique(4);
         maxWeightCliquesForRounds(i) = clique(5);
         averageWeightCliquesForRounds(i) = clique(6);
+        if clique(end) == 1
+            fullCliqueIDsAtFinalRound = [fullCliquesAtFinalRound, clique];
+        end
     end
 
     firstRoundNumFlsInClique = numberOfFlsInGroupForRounds{1};
@@ -46,8 +50,10 @@ function reportDecentralizedStats(figPrefix, cliqueStatByRounds, G)
     save(filename);
     
     graphPrefix = sprintf("%s/graph-", figPrefix);
-    drawLineGraphForPortionOfFLSsInClique(graphPrefix, 1, size(cliqueStatByRounds, 2), 5, portionOfFullCliquesForRounds)
+
+    drawLineGraphForPortionOfFLSsInClique(graphPrefix, 1, size(cliqueStatByRounds, 2), 25, portionOfFullCliquesForRounds)
     drawHistogramForNumFLS(graphPrefix, firstRoundNumFlsInClique, midRoundNumFlsInClique, lastRoundNumFlsInClique);
     drawHistogramForEdgeWeight(graphPrefix, minWeightCliquesForRounds, maxWeightCliquesForRounds, averageWeightCliquesForRounds);
     drawHistogramForWeightDistribution(graphPrefix, firstRoundWeightsInClique, midRoundWeightsInClique, lastRoundWeightsInClique);
+    drawHistogramForFullClique(graphPrefix, cliqueIDsForFinalRound);
 end
